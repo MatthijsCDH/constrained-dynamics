@@ -1297,14 +1297,15 @@ class NeuralNetwork:
             loss_names, log_lambdas, self.train_start_time, physics_desc,
         )
 
-        if epoch % 5000 == 0:
+        if epoch % 5000 == 0 and self.save_filepath is not None:
             self.save_weights(training=True, epoch=epoch)
 
     def train(self):
         self.train_setup()
         for epoch in range(1, self.epochs + 1):
             self.train_epoch(epoch)
-        self.save_weights()
+        if self.save_filepath is not None:
+            self.save_weights()
 
     def save_weights(self, training=False, epoch=None):
         base_path = self.save_filepath

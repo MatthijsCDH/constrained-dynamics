@@ -11,7 +11,7 @@ class NetworkConfig:
     learning_rate: float
     decay_steps:   Optional[int] = None
     warmup_steps:  Optional[int] = None
-    save_filepath: str           = "checkpoints/weights.pkl"
+    save_filepath: Optional[str] = None
     load_filepath: Optional[str] = None
 
 @dataclass(frozen=True)

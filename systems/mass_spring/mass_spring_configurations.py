@@ -25,9 +25,6 @@ SYSTEM = SystemConfig(
     system_params={"omega": 2.1},
 )
 
-# True omega=1.0, q0=1.0, p0=0.0. q0/p0 bounds match DATA_GEN_FIELD's own
-# q_range/p_range below -- a physically sensible domain for this system's
-# IC, not an arbitrary choice.
 OMEGA_BOUNDS = (0.05, 5.0)
 Q0_BOUNDS    = (-3.0, 3.0)
 P0_BOUNDS    = (-3.0, 3.0)
@@ -106,7 +103,6 @@ MLP_NETWORK = NetworkConfig(
     ),
     epochs        = 2000,
     learning_rate = 4.6e-4,
-    save_filepath = "checkpoints/mass_spring_mlp.pkl",
 )
 
 # HNN ────────────────────────────────────────────────────────
@@ -133,7 +129,6 @@ HNN_NETWORK = NetworkConfig(
     ),
     epochs        = 1000,
     learning_rate = 1e-3,
-    save_filepath = "checkpoints/mass_spring_hnn.pkl",
 )
 
 
@@ -161,7 +156,6 @@ LNN_NETWORK = NetworkConfig(
     ),
     epochs        = 4000,
     learning_rate = 1e-3,
-    save_filepath = "checkpoints/mass_spring_lnn.pkl",
 )
 # PINN ────────────────────────────────────────────────────────
 PINN_LOSS = PINNLossConfig(
@@ -191,7 +185,6 @@ PINN_NETWORK = NetworkConfig(
     ),
     epochs        = 15000,
     learning_rate = 3e-4,
-    save_filepath = "checkpoints/mass_spring_pinn.pkl",
 )
 
 

@@ -104,9 +104,7 @@ MLP_NETWORK = NetworkConfig(
         {"type": "fc", "units": 2,  "activation": "linear"},
     ),
     epochs        = 2000,
-    learning_rate = 1e-3,
-    save_filepath = "checkpoints/mass_spring_damped_mlp.pkl",
-)
+    learning_rate = 1e-3,)
 
 # HNN ────────────────────────────────────────────────────────
 HNN_LOSS = HNNLossConfig(
@@ -133,7 +131,6 @@ HNN_NETWORK = NetworkConfig(
     ),
     epochs        = 1000,
     learning_rate = 1e-3,
-    save_filepath = "checkpoints/mass_spring_damped_hnn.pkl",
 )
 
 
@@ -162,7 +159,6 @@ LNN_NETWORK = NetworkConfig(
     ),
     epochs        = 4000,
     learning_rate = 1e-3,
-    save_filepath = "checkpoints/mass_spring_damped_lnn.pkl",
 )
 
 # PINN ────────────────────────────────────────────────────────
@@ -194,7 +190,6 @@ PINN_NETWORK = NetworkConfig(
     ),
     epochs        = 3000,
     learning_rate = 2e-4,
-    save_filepath = "checkpoints/mass_spring_damped_pinn.pkl",
 )
 
 
