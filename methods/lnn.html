@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../evaluation.html">
+        <link rel="prev" href="hnn.html">
       
       
-        <link rel="next" href="mlp.html">
+        <link rel="next" href="../systems/index.html">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Overview - HNNs vs PINNs</title>
+        <title>LNN - HNNs vs PINNs</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#methods" class="md-skip">
+        <a href="#lnn-lagrangian-neural-network" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overview
+              LNN
             
           </span>
         </div>
@@ -485,7 +485,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="index.html" class="md-nav__link md-nav__link--active">
+            <a href="index.html" class="md-nav__link ">
               
   
   
@@ -503,7 +503,7 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_4" id="__nav_4_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -610,10 +610,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="lnn.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LNN
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="lnn.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -629,6 +656,148 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#loss-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loss function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-ons-built-for-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add-ons built for this project
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Add-ons built for this project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-known-term-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hybrid known-term + network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dissipative-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dissipative extensions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dissipative extensions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rayleigh-dissipation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rayleigh dissipation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learned-dissipation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learned dissipation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-between-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing between them
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollouts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -883,6 +1052,136 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#loss-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loss function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-ons-built-for-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add-ons built for this project
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Add-ons built for this project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-known-term-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hybrid known-term + network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dissipative-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dissipative extensions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dissipative extensions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rayleigh-dissipation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rayleigh dissipation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learned-dissipation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learned dissipation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-between-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing between them
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rollouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollouts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -901,38 +1200,130 @@
   
 
 
-<h1 id="methods">Methods</h1>
+<h1 id="lnn-lagrangian-neural-network">LNN — Lagrangian Neural Network</h1>
+<p>An LNN is trained on field data <span class="arithmatex">\(x_i = (q_i, \dot q_i)\)</span>, where <span class="arithmatex">\(q_i\)</span> and <span class="arithmatex">\(\dot q_i\)</span> are the generalized coordinates and velocities of the system respectively, and outputs a single scalar corresponding to the Lagrangian <span class="arithmatex">\(L(q, \dot q)\)</span>. Like the HNN it never predicts the dynamics directly; instead they are recovered from derivatives of that scalar. Unlike the HNN, the recovery is not a gradient but a linear solve. </p>
+<p>Conservation of energy is an inherent property of the architecture, due to Noether's theorem. For a Lagrangian with no explicit time dependence, the conserved quantity is</p>
+<div class="arithmatex">\[
+E = \dot q \cdot \frac{\partial L}{\partial \dot q} - L
+\]</div>
+<p>which is constant along the Euler-Lagrange flow for any <span class="arithmatex">\(L(q, \dot q)\)</span> the network represents. Moreover, because time does not explicitly enter the training, each sample in <span class="arithmatex">\((q, \dot q)\)</span> space is independent, eliminating the need for trajectory-based training and reducing computational cost. Time evolution only enters after training, by numerically integrating the learned dynamics.</p>
+<p>The difference with an HNN lies in the coordinates and in how the dynamics are recovered. An HNN requires the canonical momentum <span class="arithmatex">\(p\)</span>, which is system-specific and has to be derived before training can start, whereas an LNN takes <span class="arithmatex">\((q, \dot q)\)</span> directly. In return, Hamilton's equations are first order and yield the dynamics from a single gradient, while the Euler-Lagrange equation is second order and coupled, so the accelerations follow from a linear solve instead.</p>
+<p align="center">
+  <img src="../images/LNN.svg" width="520" alt="LNN architecture: generalized coordinates and velocities in, scalar Lagrangian out, accelerations via the Euler-Lagrange solve">
+</p>
+
+<p><span class="arithmatex">\((q_i, \dot q_i)\)</span> in, scalar <span class="arithmatex">\(\mathcal{L}\)</span> out. The accelerations follow from the Euler-Lagrange equation, which requires second derivatives of the network output rather than the single gradient an HNN needs.</p>
+<h2 id="loss-function">Loss function</h2>
+<p>At each state, the network does not predict the time derivatives, but instead recovers them from the Euler-Lagrange equation,</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q}\right) = \frac{\partial L}{\partial q}
+\]</div>
+<p>Expanding the total time derivative with the chain rule turns this into a linear system for the accelerations,</p>
+<div class="arithmatex">\[
+\underbrace{\frac{\partial^2 L_\theta}{\partial \dot q\, \partial \dot q^{\mathsf{T}}}}_{\text{Hessian}} \ddot q
+\;=\;
+\frac{\partial L_\theta}{\partial q} - \underbrace{\frac{\partial^2 L_\theta}{\partial \dot q\, \partial q^{\mathsf{T}}}}_{\text{cross term}} \dot q
+\]</div>
+<p>so a single evaluation needs three autodiff calls on the scalar output: a <code>jax.grad</code> for <span class="arithmatex">\(\partial L_\theta/\partial q\)</span>, a <code>jax.hessian</code> for the Hessian, and a <code>jax.jacfwd</code> of <code>jax.grad</code> for the cross term. Nothing constrains the learned Hessian to be invertible, and early in training it frequently is not, so the system is solved with <code>jnp.linalg.pinv</code> rather than a direct inverse. The predicted dynamics are then</p>
+<div class="arithmatex">\[
+f_\theta(q, \dot q) = \begin{pmatrix} \dot q \\[2pt] \ddot q \end{pmatrix},
+\qquad
+\ddot q = \left(\frac{\partial^2 L_\theta}{\partial \dot q\, \partial \dot q^{\mathsf{T}}}\right)^{+}\left(\frac{\partial L_\theta}{\partial q} - \frac{\partial^2 L_\theta}{\partial \dot q\, \partial q^{\mathsf{T}}}\dot q\right)
+\]</div>
+<p>which are compared directly with the labeled derivatives using the mean square error,</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\text{eom}} = \frac{1}{N} \sum_{i=1}^{N} \bigl\lVert f_\theta(q_i, \dot q_i) - \dot x_i \bigr\rVert^2 .
+\]</div>
+<p>This term is weighted by <code>LNNLossConfig.lambda_eom</code>. Together with an L2 regularization term <span class="arithmatex">\(\mathcal{L}_{\text{reg}}\)</span>, this makes up the loss vector for an LNN. These loss functions are balanced by the Kendall uncertainty weighting, described in <a href="../index.html#loss-weighting">Loss weighting</a>. </p>
+<h2 id="add-ons-built-for-this-project">Add-ons built for this project</h2>
+<h3 id="hybrid-known-term-network">Hybrid known-term + network</h3>
+<p>The Lagrangian <span class="arithmatex">\(L\)</span> can be split into a known functional form plus a network correction: <span class="arithmatex">\(L = L_{\text{known}}(q,\dot q;\theta) + L_{\text{net}}(q,\dot q)\)</span>, where <span class="arithmatex">\(\theta\)</span> are learnable physics parameters and the known term is supplied per system through <code>LagrangianConfig.known_term</code>. When <code>known_term</code> is <code>None</code> the Lagrangian is the pure black-box network. The network only has to learn whatever the known term misses, and the physics parameters come out of training as an actual number, not just a fitted black box.</p>
+<p>However, this procedure provides no mechanism to prevent <span class="arithmatex">\(L_{\text{net}}(q,\dot q)\)</span> from absorbing the entire Lagrangian, rendering <span class="arithmatex">\(L_{\text{known}}(q,\dot q;\theta)\)</span> irrelevant. Consequently, the learnable parameter <span class="arithmatex">\(\theta\)</span> no longer has a unique solution, as many different <span class="arithmatex">\(\theta\)</span> can be paired with a compensating <span class="arithmatex">\(L_{\text{net}}\)</span> to reach the same minimal loss, leaving the loss landscape flat along <span class="arithmatex">\(\theta\)</span>. Setting <code>LagrangianConfig.penalize_correction</code> adds a term to the loss to break the degeneracy,</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\text{correction}} = \frac{1}{N} \sum_{i=1}^{N} L_{\text{net}}(q_i, \dot q_i)^2
+\]</div>
+<p>This is a pure L2 penalty on the correction network's own output, weighted by <code>LNNLossConfig.lambda_correction</code>. Increasing <span class="arithmatex">\(L_{\text{net}}\)</span> to absorb more of the Lagrangian now has a penalty, which pushes the optimizer toward solutions where <span class="arithmatex">\(L_{\text{known}}(q,\dot q;\theta)\)</span> carries more of the dynamics and <span class="arithmatex">\(L_{\text{net}}\)</span> is used only to capture the remaining residual.</p>
+<h3 id="dissipative-extensions">Dissipative extensions</h3>
+<p>A standard LNN trained on damped data cannot represent systems with decaying energy, since <span class="arithmatex">\(\dot{E}=0\)</span> is an inherent property. Setting <code>LagrangianConfig.dissipation</code> to <code>"rayleigh"</code> or <code>"learned_dissipation"</code> instead of the default <code>"none"</code> offers two architectural changes that allow for dissipation, where the conservation guarantee is replaced by <span class="arithmatex">\(\dot{E} \leq 0\)</span>. </p>
+<h4 id="rayleigh-dissipation">Rayleigh dissipation</h4>
+<p>To account for dissipation, the term <span class="arithmatex">\(D(q, \dot q)\)</span> is added to the Euler-Lagrange equation. The resulting equations of motion are,</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_i}\right) = \frac{\partial L}{\partial q_i} - \frac{\partial D}{\partial \dot q_i}
+\]</div>
+<p>which enters the solve as one more term on the right-hand side,</p>
+<div class="arithmatex">\[
+\ddot q = \left(\frac{\partial^2 L}{\partial \dot q\, \partial \dot q^{\mathsf{T}}}\right)^{+}\left(\frac{\partial L}{\partial q} - \frac{\partial^2 L}{\partial \dot q\, \partial q^{\mathsf{T}}}\dot q - \frac{\partial D}{\partial \dot q}\right)
+\]</div>
+<p>With this additional term, the rate of change of the energy becomes,</p>
+<div class="arithmatex">\[
+\dot E = -\sum_i \dot q_i \frac{\partial D}{\partial \dot q_i} \le 0
+\]</div>
+<p>The inequality is not an automatic guarantee, but must be enforced to ensure that the dissipative term only removes energy from the system. An example of a commonly used dissipation function is the quadratic form,</p>
+<div class="arithmatex">\[
+D(q, \dot q) = \tfrac{1}{2}\gamma\,\dot q^{2}
+\quad\Longrightarrow\quad
+\dot E = -\gamma\,\dot q^{2} \le 0
+\]</div>
+<p>This form describes velocity-dependent damping, such as friction or air resistance. To satisfy the inequality the damping factor must be non-negative, <span class="arithmatex">\(\gamma \ge 0\)</span>, which is enforced by bounding its learnable domain. Rayleigh is the dissipative counterpart of the hybrid known-term above and is supplied per system through <code>LagrangianConfig.dissipation_term</code>, and only its constants are learnable, given by <code>LearnableParam</code> entries in <code>LNNLossConfig.physics</code>. That makes <span class="arithmatex">\(\gamma\)</span> come out of training as a physically meaningful number, at the cost of having to know the damping structure in advance.</p>
+<h4 id="learned-dissipation">Learned dissipation</h4>
+<p>When the damping structure is not known, the whole dissipation operator can be learned instead. The dissipation is written as a quadratic form in the velocities,</p>
+<div class="arithmatex">\[
+D(q, \dot q) = \tfrac{1}{2}\sum_{i,j=1}^{n} \dot q_i\,R_{ij}(q)\,\dot q_j
+\]</div>
+<p>where <span class="arithmatex">\(R\)</span> is the correction matrix that contains the dissipation of the system. In contrast to Rayleigh, the correction matrix <span class="arithmatex">\(R\)</span> can couple different degrees of freedom nonlinearly. The rate of change of the energy becomes,</p>
+<div class="arithmatex">\[
+\dot E = -\sum_{i,j=1}^{n} R_{ij}\,\dot q_i\,\dot q_j \le 0
+\]</div>
+<p>where the inequality must be enforced rather than automatically guaranteed. To ensure this condition, the matrix <span class="arithmatex">\(R\)</span> must be symmetric positive semidefinite. However, since <span class="arithmatex">\(R\)</span> is learned by the network, it is not guaranteed that <span class="arithmatex">\(R\)</span> is positive semidefinite. To enforce positive semidefiniteness, the network instead learns a lower triangular matrix <span class="arithmatex">\(L\)</span>, from which <span class="arithmatex">\(R\)</span> is constructed,</p>
+<div class="arithmatex">\[
+R = L L^{\mathsf{T}}, \qquad L \ \text{lower triangular}
+\]</div>
+<p>This guarantees that <span class="arithmatex">\(v^{\mathsf{T}} L L^{\mathsf{T}} v = \lVert L^{\mathsf{T}} v \rVert^2 \ge 0, \quad \forall v \in \mathbb{R}^n\)</span>. The matrix <span class="arithmatex">\(L\)</span> is read off a second slice of the same network's output, evaluated at the same input with the velocity slot forced to zero so that <span class="arithmatex">\(R\)</span> depends on <span class="arithmatex">\(q\)</span> alone, where index <span class="arithmatex">\(0\)</span> is the Lagrangian and the next <span class="arithmatex">\(k(k+1)/2\)</span> entries are the lower-triangular entries of <span class="arithmatex">\(L\)</span>, where <span class="arithmatex">\(k = n_{\text{dof}}\)</span> and <span class="arithmatex">\(n_{\text{dof}}\)</span> is <code>LagrangianConfig.n_dof</code>. </p>
+<h4 id="choosing-between-them">Choosing between them</h4>
 <table>
 <thead>
 <tr>
 <th></th>
-<th>Learns</th>
-<th>Physics enters via</th>
+<th>Rayleigh</th>
+<th>Learned dissipation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="mlp.html">MLP</a></td>
-<td><code>state → state_dot</code> or <code>t → state</code></td>
-<td>Nowhere</td>
+<td>Damping form</td>
+<td>supplied by the system</td>
+<td>learned</td>
 </tr>
 <tr>
-<td><a href="pinn.html">PINN</a></td>
-<td><code>t → state</code></td>
-<td>A soft residual penalty in the loss</td>
+<td>Learned quantity</td>
+<td>scalar constants</td>
+<td>the <span class="arithmatex">\(k(k+1)/2\)</span> entries of a lower-triangular <span class="arithmatex">\(L\)</span>, from which <span class="arithmatex">\(R = LL^{\mathsf{T}}\)</span></td>
 </tr>
 <tr>
-<td><a href="hnn.html">HNN</a></td>
-<td><code>(q, p) → H</code></td>
-<td>A symplectic gradient</td>
+<td>Interpretability</td>
+<td>high, <span class="arithmatex">\(\gamma\)</span> is a physical number</td>
+<td>low, <span class="arithmatex">\(R\)</span> is a black box</td>
 </tr>
 <tr>
-<td><a href="lnn.html">LNN</a></td>
-<td><code>(q, q̇) → L</code></td>
-<td>An Euler-Lagrange solve</td>
+<td>Generality</td>
+<td>a fixed functional form of <span class="arithmatex">\(D\)</span></td>
+<td><span class="arithmatex">\(R(q)\)</span> varies with configuration, so it can couple degrees of freedom</td>
+</tr>
+<tr>
+<td>Network output width</td>
+<td><span class="arithmatex">\(1\)</span></td>
+<td><span class="arithmatex">\(1 + k(k+1)/2\)</span></td>
 </tr>
 </tbody>
 </table>
+<p>Learned dissipation is strictly the more general of the two. Rayleigh is the better choice when the damping structure is actually known, because it recovers an interpretable parameter instead of a black box.</p>
+<h2 id="rollouts">Rollouts</h2>
+<p>In contrast to the Hamiltonian rollouts, the Lagrangian only uses <a href="hnn.html#rk4-default">RK4</a> and so <code>LagrangianConfig</code> has no <code>integrator</code> field. The scheme itself is the same one described there: <code>NeuralNetwork.trajectories()</code> integrates whatever vector field <code>dynamics()</code> hands it, so only the field differs, being the Euler-Lagrange solve rather than the symplectic gradient. </p>
+<h2 id="advantages">Advantages</h2>
+<p>Similar to an HNN, conservation of energy is exact, but is represented by Noether's identity and holds only where the Euler-Lagrange equations are solved exactly. Although canonical momenta are not required, the information is not free here either. This is because the equations of motion require inverting the Hessian, which may be singular. In this framework, a pseudo-inverse is used, which equals the exact inverse wherever the Hessian is nonsingular and only weakens the conservation guarantee when it degenerates. Like HNN it carries one physics term rather than PINN's three, so the tuning burden is low. Moreover, other conservation laws may be inserted either via a PINN-like soft constraint in the loss function, or strictly enforced by transforming the inputs. </p>
+<h2 id="disadvantages">Disadvantages</h2>
+<p>Any system must be expressible as a Lagrangian, otherwise the learnable scalar has no meaning and the dynamics cannot be extracted. </p>
+<p>The cost is concentrated in one place and it is significant. The Hessian solve makes every evaluation more expensive than an HNN's gradient, training backpropagates through third derivatives, and the whole thing is numerically fragile enough to need a smooth activation and a pseudo-inverse solve before it will train at all. Like the HNN it applies only to systems expressible in this formalism, and it shares the requirement for labeled derivatives at every training point, with no equivalent of PINN's ability to work from sparse observations alone.</p>
 
 
 

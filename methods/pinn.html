@@ -11,28 +11,28 @@
       
       
       
-        <link rel="prev" href="../index.html">
+        <link rel="prev" href="mlp.html">
       
       
-        <link rel="next" href="../mass_spring_damped/index.html">
+        <link rel="next" href="hnn.html">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Mass Spring - HNNs vs PINNs</title>
+        <title>PINN - HNNs vs PINNs</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,7 +51,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mass-spring-simple-harmonic-oscillator" class="md-skip">
+        <a href="#pinn-physics-informed-neural-network" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../index.html" title="HNNs vs PINNs" class="md-header__button md-logo" aria-label="HNNs vs PINNs" data-md-component="logo">
+    <a href="../index.html" title="HNNs vs PINNs" class="md-header__button md-logo" aria-label="HNNs vs PINNs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mass Spring
+              PINN
             
           </span>
         </div>
@@ -221,7 +221,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../index.html" class="md-tabs__link">
+      <a href="../index.html" class="md-tabs__link">
         
   
   
@@ -240,7 +240,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../configurations.html" class="md-tabs__link">
+      <a href="../configurations.html" class="md-tabs__link">
         
   
   
@@ -259,7 +259,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../evaluation.html" class="md-tabs__link">
+      <a href="../evaluation.html" class="md-tabs__link">
         
   
   
@@ -276,11 +276,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../methods/index.html" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="index.html" class="md-tabs__link">
           
   
   
@@ -298,13 +300,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../index.html" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../systems/index.html" class="md-tabs__link">
           
   
   
@@ -340,7 +340,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../index.html" title="HNNs vs PINNs" class="md-nav__button md-logo" aria-label="HNNs vs PINNs" data-md-component="logo">
+    <a href="../index.html" title="HNNs vs PINNs" class="md-nav__button md-logo" aria-label="HNNs vs PINNs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -370,7 +370,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../index.html" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   
@@ -397,7 +397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../configurations.html" class="md-nav__link">
+      <a href="../configurations.html" class="md-nav__link">
         
   
   
@@ -424,7 +424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../evaluation.html" class="md-nav__link">
+      <a href="../evaluation.html" class="md-nav__link">
         
   
   
@@ -448,6 +448,8 @@
       
   
   
+    
+  
   
   
     
@@ -469,18 +471,21 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../methods/index.html" class="md-nav__link ">
+            <a href="index.html" class="md-nav__link ">
               
   
   
@@ -498,13 +503,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -524,7 +529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../methods/mlp.html" class="md-nav__link">
+      <a href="mlp.html" class="md-nav__link">
         
   
   
@@ -549,10 +554,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../methods/pinn.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PINN
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="pinn.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -568,6 +600,98 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#loss-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loss function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-ons-built-for-this-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add-ons built for this project
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Add-ons built for this project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learnable-physics-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learnable physics parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#causal-weighting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Causal weighting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -580,7 +704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../methods/hnn.html" class="md-nav__link">
+      <a href="hnn.html" class="md-nav__link">
         
   
   
@@ -608,7 +732,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../methods/lnn.html" class="md-nav__link">
+      <a href="lnn.html" class="md-nav__link">
         
   
   
@@ -640,8 +764,6 @@
       
   
   
-    
-  
   
   
     
@@ -665,21 +787,18 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../index.html" class="md-nav__link ">
+            <a href="../systems/index.html" class="md-nav__link ">
               
   
   
@@ -697,13 +816,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -720,37 +839,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Mass Spring
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../systems/mass_spring/index.html" class="md-nav__link">
         
   
   
@@ -766,48 +858,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-system" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The system
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -820,7 +870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mass_spring_damped/index.html" class="md-nav__link">
+      <a href="../systems/mass_spring_damped/index.html" class="md-nav__link">
         
   
   
@@ -848,7 +898,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../double_pendulum/index.html" class="md-nav__link">
+      <a href="../systems/double_pendulum/index.html" class="md-nav__link">
         
   
   
@@ -876,7 +926,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../double_pendulum_damped/index.html" class="md-nav__link">
+      <a href="../systems/double_pendulum_damped/index.html" class="md-nav__link">
         
   
   
@@ -904,7 +954,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../charged_particle/index.html" class="md-nav__link">
+      <a href="../systems/charged_particle/index.html" class="md-nav__link">
         
   
   
@@ -959,10 +1009,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-system" class="md-nav__link">
+  <a href="#loss-function" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The system
+        Loss function
       
     </span>
   </a>
@@ -970,10 +1020,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
+  <a href="#add-ons-built-for-this-project" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Results
+        Add-ons built for this project
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Add-ons built for this project">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learnable-physics-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learnable physics parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#causal-weighting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Causal weighting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disadvantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disadvantages
       
     </span>
   </a>
@@ -1000,40 +1100,68 @@
   
 
 
-<h1 id="mass-spring-simple-harmonic-oscillator">Mass-Spring (Simple Harmonic Oscillator)</h1>
-<!-- BEGIN:animation -->
-<!-- END:animation -->
+<h1 id="pinn-physics-informed-neural-network">PINN — Physics-Informed Neural Network</h1>
+<p>A PINN is trained on trajectory data <span class="arithmatex">\((t_i, u_i)\)</span> and maps time directly to state, <span class="arithmatex">\(u_\theta(t)\)</span>. Unlike the HNN and LNN it carries no architectural constraint, with the network being a standard MLP, and the physics enters entirely through the loss, as a residual of the governing equation evaluated wherever the solution is required to hold. That residual is what makes a PINN predict beyond the temporal domain covered by the dataset.</p>
+<p align="center">
+  <img src="../images/PINN1.svg" width="520" alt="PINN architecture: time in, state out, residual of the governing equation evaluated by autodiff">
+</p>
 
-<ul>
-<li><strong>Phase space:</strong> 2D, <span class="arithmatex">\((q, p)\)</span></li>
-<li><strong>True parameter:</strong> <span class="arithmatex">\(\omega = 2.1\)</span></li>
-<li><strong>Training domain:</strong> <span class="arithmatex">\(t \in [0, 4 \pi]\)</span></li>
-</ul>
-<h2 id="the-system">The system</h2>
-<p>A unit mass on a linear spring. The equation of motion is</p>
+<p><span class="arithmatex">\(t\)</span> in, <span class="arithmatex">\(u_\theta(t)\)</span> out. The derivatives the residual needs are taken with <code>jax.grad</code> on the network's own output, so the governing equation is checked exactly rather than approximated by finite differences.</p>
+<h2 id="loss-function">Loss function</h2>
+<p>The PINN's loss vector consists of four active loss functions each performing a different task, plus a boundary term that is reserved for PDE systems. </p>
+<p><strong>Data.</strong> This loss term consists of an ordinary mean square error, where the learned trajectory is fit against the observations, on the normalized input <span class="arithmatex">\(\hat t = t / t_{\max}\)</span>,</p>
 <div class="arithmatex">\[
-\ddot q = -\omega^2 q
-\qquad\Longleftrightarrow\qquad
-\dot q = p, \quad \dot p = -\omega^2 q
+\mathcal{L}_{\text{data}} = \frac{1}{N}\sum_{i=1}^{N}\bigl(u_\theta(t_i) - u_i\bigr)^2
 \]</div>
-<p>which has solution,</p>
+<p><strong>Physics.</strong> The physics loss term is a measure of how well the fitted data follows the governing differential equation <span class="arithmatex">\(\mathcal{N}[u] = 0\)</span>. The residual is that operator applied to the network's own output,</p>
 <div class="arithmatex">\[
-q(t) = q_0\cos\omega t + \frac{p_0}{\omega}\sin\omega t,
+r(t) = \mathcal{N}\bigl[u_\theta\bigr](t)
+\]</div>
+<p>with every derivative it contains supplied by autodiff. It is evaluated at a fixed set of collocation points <span class="arithmatex">\(\{\tau_j\}\)</span>, drawn once at construction over <span class="arithmatex">\([\,\)</span><code>collocation.x_min</code><span class="arithmatex">\(,\,\)</span><code>collocation.x_max</code><span class="arithmatex">\(\,]\)</span> and independent of the data. </p>
+<div class="arithmatex">\[
+\mathcal{L}_{\text{physics}} = \frac{1}{M}\sum_{j=1}^{M} r(\tau_j)^2
+\]</div>
+<p>Collocation points allow the network to enforce the governing equations beyond the temporal domain covered by the data, enabling extrapolation to later times. Since these points do not require additional labeled data, extending the temporal domain does not add to the data cost, although the quality of the extrapolation still depends on the accuracy of the learned dynamics and the governing equations. Each system supplies its own <span class="arithmatex">\(\mathcal{N}\)</span> through <code>PINNLossConfig.residual_fn</code>. </p>
+<p><strong>Initial.</strong> In general, the data and physics loss functions do not uniquely determine the solution of a dynamical system. To enforce the correct initial value, </p>
+<div class="arithmatex">\[
+\mathcal{L}_{\text{initial}} = \bigl\lVert \mathcal{I}\bigl[u_\theta\bigr] - u_{0} \bigr\rVert^2
+\]</div>
+<p>where <span class="arithmatex">\(\mathcal{I}\)</span> evaluates the network at <span class="arithmatex">\(t=0\)</span> and compares it with the prescribed initial state <span class="arithmatex">\(u_0\)</span>. For more complicated initial values, the loss can include initial derivatives. </p>
+<p><strong>Boundary.</strong> For problems with spatial boundaries, the solution must also satisfy the conditions of the spatial domain. These conditions are enforced by the boundary loss</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\text{boundary}} = \bigl\lVert \mathcal{B}\bigl[u_\theta\bigr] - b \bigr\rVert^2
+\]</div>
+<p>where <span class="arithmatex">\(\mathcal{B}\)</span> represents the boundary operator and <span class="arithmatex">\(b\)</span> denotes the prescribed boundary values. The operator <span class="arithmatex">\(\mathcal{B}\)</span> can take different forms depending on the problem, such as a Dirichlet condition specifying the solution itself or a Neumann condition specifying its normal derivative.</p>
+<div class="arithmatex">\[
+\bigl(\mathcal{L}_{\text{data}},\ \mathcal{L}_{\text{physics}},\ \mathcal{L}_{\text{initial}},\ \mathcal{L}_{\text{boundary}},\ \mathcal{L}_{\text{reg}}\bigr)
+\]</div>
+<p>balanced by Kendall uncertainty weighting, described in <a href="../index.html#loss-weighting">Loss weighting</a>.</p>
+<p>Since the PINN can contain up to five loss terms, balancing their relative contributions becomes increasingly difficult. The loss weights act analogously to Lagrange multipliers, controlling the strength with which each constraint is enforced. Consequently, the physical constraints are imposed softly through penalties rather than being satisfied exactly as hard constraints.</p>
+<h2 id="add-ons-built-for-this-project">Add-ons built for this project</h2>
+<h3 id="learnable-physics-parameters">Learnable physics parameters</h3>
+<p>The constants appearing in <span class="arithmatex">\(\mathcal{N}\)</span> do not have to be known by the loss functions. Each is declared as a <code>LearnableParam(value, learnable)</code> inside <code>PINNLossConfig.physics</code> and lands in <code>params["physics"]</code>, so the optimizer recovers it from data alongside the network weights. Initial and boundary conditions can be declared the same way when they are unknown.</p>
+<p>However, as the number of learnable parameters appearing in the physics residual increases, so does the space of parameter configurations that can satisfy the governing equations within the data domain, potentially leading to a non-unique solution. To constrain the learnable parameters to physically plausible ranges, each unconstrained parameter <span class="arithmatex">\(\tilde{\theta}\)</span> is mapped to a bounded interval using a sigmoid function,</p>
+<div class="arithmatex">\[
+\theta = \theta_{\min} + (\theta_{\max} - \theta_{\min})\,\sigma(\tilde\theta)
+\]</div>
+<p>with the limits taken from <code>PINNLossConfig.bounds</code>, so a parameter cannot leave its range no matter what gradient it receives. Declaring a parameter with <code>learnable=False</code> keeps it in the same place but freezes it, which is equivalent to hardcoding the constant.</p>
+<p>This is where a PINN earns its keep relative to a black-box model: the recovered constants are physically meaningful numbers, reported after training by <code>describe_physics</code> and checked against the truth in the results tables.</p>
+<p>If a boundary or initial condition's target is itself learnable, the losses <span class="arithmatex">\(\mathcal{L}_{\text{boundary}}\)</span> and <span class="arithmatex">\(\mathcal{L}_{\text{initial}}\)</span> have free parameters on both sides, so the corresponding loss no longer uniquely sets the solution. Recovering the true conditions then requires the data loss to act as an additional source of information. </p>
+<h3 id="causal-weighting">Causal weighting</h3>
+<p>A PINN during training has no incentive to optimize in a causal order, which can be problematic as errors at early times can propagate forward. Therefore, the network's prediction near the initial conditions must be weighted higher. This encourages the PINN to first establish a physically consistent solution at early times before using that solution as a basis for learning at later times. Causal weighting enforces the ordering by down-weighting a point according to how much residual is still unresolved before it,</p>
+<div class="arithmatex">\[
+w_j = \exp\!\left(-\varepsilon \sum_{k&lt;j} \bar r_k \right),
 \qquad
-p(t) = -q_0\,\omega\sin\omega t + p_0\cos\omega t .
+\bar r_k = \frac{1}{|B_k|}\sum_{\tau \in B_k} r(\tau)^2
 \]</div>
-<p>Ground truth is evaluated from this expression rather than integrated numerically, so it carries no solver error. The Lagrangian and Hamiltonian are</p>
-<div class="arithmatex">\[
-L(q, \dot q) = \tfrac{1}{2}\dot q^{2} - \tfrac{1}{2}\omega^{2}q^{2},
-\qquad
-H(q, p) = \tfrac{1}{2}p^{2} + \tfrac{1}{2}\omega^{2}q^{2} .
-\]</div>
-<p>With unit mass <span class="arithmatex">\(p = \dot q\)</span>, so the canonical and generalized coordinates coincide and HNN and LNN see numerically identical inputs. That makes this the one system where the two can be compared without the canonical-momentum derivation getting in the way.</p>
-<p><span class="arithmatex">\(H\)</span> is conserved exactly, and every orbit is a closed ellipse in phase space, so any energy drift a method reports is its own error rather than a property of the system.</p>
-<h2 id="results">Results</h2>
-<!-- BEGIN:results -->
-<p><em>No benchmark results found for <code>mass_spring</code>.</em></p>
-<!-- END:results -->
+<p>The collocation points are sorted in time and grouped into <code>CollocationConfig.bins</code> equal-count bins <span class="arithmatex">\(B_k\)</span>, so the sum runs over bin means rather than over individual points. This keeps <span class="arithmatex">\(\varepsilon\)</span> independent of how many collocation points a system happens to use, and averages within a bin instead of accumulating a noisy per-point random walk.</p>
+<p>The <span class="arithmatex">\(\varepsilon\)</span>, given by <code>PINNLossConfig.causal_epsilon</code>, controls the strength of the weighting and is held constant during training. No schedule is needed, because the mechanism anneals itself: early on the residuals are large, so the sum is large and every bin past the first is weighted near zero; as the residuals fall the weights relax towards one and the term becomes an ordinary unweighted residual. Setting <span class="arithmatex">\(\varepsilon = 0\)</span> disables the mechanism.</p>
+<h2 id="advantages">Advantages</h2>
+<p>The network enforces the governing equations beyond the temporal data domain by minimizing the residual evaluated at a fixed set of collocation points. In contrast to an HNN and LNN, where the input requires labeled derivative states, a PINN only needs the state observed over time. Moreover, unknown physics parameters appearing in <span class="arithmatex">\(\mathcal{N}\)</span> are learnable. </p>
+<h2 id="disadvantages">Disadvantages</h2>
+<p>In contrast, the physics is only enforced through a soft penalty and so violations are minimized but not eliminated. Therefore, energy conservation is not exact, and the rollout may drift off the true energy surface. </p>
+<p>If every term of the residual contains <span class="arithmatex">\(u\)</span>, the homogeneous equation can be satisfied at the trivial solution <span class="arithmatex">\(u \equiv 0\)</span> for any value of the learnable physics parameters in <span class="arithmatex">\(\mathcal{N}\)</span>. Since the physics term never references the true trajectory, the trivial solution is a global minimum of it, and the physics parameters are unidentifiable there. This is what makes tuning the weights delicate, as the optimizer has no reason to favor one term at the expense of the others. Thus if the physics residual is driven faster to the trivial solution, then the data term must pull the solution out against an already minimized physics term, which can only be achieved if its weight is large enough. This makes tuning a PINN a difficult task.</p>
+<p>Finally, the method is tied to knowing the governing equation, including which terms are present, whereas the HNN and LNN require only the existence of a Hamiltonian or a Lagrangian respectively.</p>
 
 
 
@@ -1089,12 +1217,12 @@ H(q, p) = \tfrac{1}{2}p^{2} + \tfrac{1}{2}\omega^{2}q^{2} .
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "navigation.indexes", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "navigation.indexes", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="../../javascripts/mathjax.js"></script>
+        <script src="../javascripts/mathjax.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       

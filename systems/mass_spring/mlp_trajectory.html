@@ -11,10 +11,6 @@
       
       
       
-        <link rel="prev" href="../index.html">
-      
-      
-        <link rel="next" href="../mass_spring_damped/index.html">
       
       
         
@@ -25,7 +21,7 @@
     
     
       
-        <title>Mass Spring - HNNs vs PINNs</title>
+        <title>Mass-Spring — MLP (trajectory) - HNNs vs PINNs</title>
       
     
     
@@ -76,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mass-spring-simple-harmonic-oscillator" class="md-skip">
+        <a href="#mass-spring-mlp-trajectory" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mass Spring
+              Mass-Spring — MLP (trajectory)
             
           </span>
         </div>
@@ -298,12 +294,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../index.html" class="md-tabs__link">
           
   
@@ -640,8 +634,6 @@
       
   
   
-    
-  
   
   
     
@@ -665,17 +657,14 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -697,13 +686,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -720,37 +709,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Mass Spring
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
         
   
   
@@ -766,48 +728,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-system" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The system
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -952,36 +872,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-system" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The system
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1000,40 +890,8 @@
   
 
 
-<h1 id="mass-spring-simple-harmonic-oscillator">Mass-Spring (Simple Harmonic Oscillator)</h1>
-<!-- BEGIN:animation -->
-<!-- END:animation -->
-
-<ul>
-<li><strong>Phase space:</strong> 2D, <span class="arithmatex">\((q, p)\)</span></li>
-<li><strong>True parameter:</strong> <span class="arithmatex">\(\omega = 2.1\)</span></li>
-<li><strong>Training domain:</strong> <span class="arithmatex">\(t \in [0, 4 \pi]\)</span></li>
-</ul>
-<h2 id="the-system">The system</h2>
-<p>A unit mass on a linear spring. The equation of motion is</p>
-<div class="arithmatex">\[
-\ddot q = -\omega^2 q
-\qquad\Longleftrightarrow\qquad
-\dot q = p, \quad \dot p = -\omega^2 q
-\]</div>
-<p>which has solution,</p>
-<div class="arithmatex">\[
-q(t) = q_0\cos\omega t + \frac{p_0}{\omega}\sin\omega t,
-\qquad
-p(t) = -q_0\,\omega\sin\omega t + p_0\cos\omega t .
-\]</div>
-<p>Ground truth is evaluated from this expression rather than integrated numerically, so it carries no solver error. The Lagrangian and Hamiltonian are</p>
-<div class="arithmatex">\[
-L(q, \dot q) = \tfrac{1}{2}\dot q^{2} - \tfrac{1}{2}\omega^{2}q^{2},
-\qquad
-H(q, p) = \tfrac{1}{2}p^{2} + \tfrac{1}{2}\omega^{2}q^{2} .
-\]</div>
-<p>With unit mass <span class="arithmatex">\(p = \dot q\)</span>, so the canonical and generalized coordinates coincide and HNN and LNN see numerically identical inputs. That makes this the one system where the two can be compared without the canonical-momentum derivation getting in the way.</p>
-<p><span class="arithmatex">\(H\)</span> is conserved exactly, and every orbit is a closed ellipse in phase space, so any energy drift a method reports is its own error rather than a property of the system.</p>
-<h2 id="results">Results</h2>
-<!-- BEGIN:results -->
-<p><em>No benchmark results found for <code>mass_spring</code>.</em></p>
-<!-- END:results -->
+<h1 id="mass-spring-mlp-trajectory">Mass-Spring — MLP (trajectory)</h1>
+<p><a href="index.html">← Mass-Spring results</a> · <a href="../../methods/mlp.html">MLP method overview</a></p>
 
 
 
