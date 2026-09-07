@@ -1106,7 +1106,7 @@
   <img src="../images/PINN1.svg" width="680" alt="PINN architecture: time in, state out, residual of the governing equation evaluated by autodiff">
 </p>
 
-<p><span class="arithmatex">\(t\)</span> in, <span class="arithmatex">\(u_\theta(t)\)</span> out. The derivatives the residual needs are taken with <code>jax.grad</code> on the network's own output, so the governing equation is checked exactly rather than approximated by finite differences.</p>
+<p>The derivatives the residual needs are taken with <code>jax.grad</code> on the network's own output, so the governing equation is checked exactly rather than approximated by finite differences.</p>
 <h2 id="loss-function">Loss function</h2>
 <p>The PINN's loss vector consists of four active loss functions each performing a different task, plus a boundary term that is reserved for PDE systems. </p>
 <p><strong>Data.</strong> This loss term consists of an ordinary mean square error, where the learned trajectory is fit against the observations, on the normalized input <span class="arithmatex">\(\hat t = t / t_{\max}\)</span>,</p>
