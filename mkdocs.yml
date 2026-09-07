@@ -1,0 +1,60 @@
+site_name: HNNs vs PINNs
+site_description: Comparing MLP, PINN, HNN and LNN
+repo_url: https://github.com/MatthijsCDH/constrained-dynamics
+repo_name: MatthijsCDH/constrained-dynamics
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - toc.follow
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - Configuration: configurations.md
+  - Evaluation: evaluation.md
+  - Methods:
+      - Overview: methods/index.md
+      - MLP: methods/mlp.md
+      - PINN: methods/pinn.md
+      - HNN: methods/hnn.md
+      - LNN: methods/lnn.md
+  - Systems:
+      - Overview: systems/index.md
+      - Mass Spring: systems/mass_spring/index.md
+      - Mass Spring (Damped): systems/mass_spring_damped/index.md
+      - Double Pendulum: systems/double_pendulum/index.md
+      - Double Pendulum (Damped): systems/double_pendulum_damped/index.md
+      - Charged Particle: systems/charged_particle/index.md

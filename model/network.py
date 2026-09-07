@@ -19,25 +19,19 @@ jax.config.update("jax_compilation_cache_dir", _CACHE_DIR)
 
 import time
 import sys
-import gc
+import dataclasses
 
 from functools import partial
-from typing import NamedTuple, Optional, Tuple, Callable, Dict, Any
-from abc import ABC, abstractmethod
-from functools import partial
+from typing import NamedTuple, Optional, Tuple
 import numpy as np
 from math import prod
 import optax
 import flax
-import cv2
-import matplotlib
-matplotlib.use("TkAgg")
-import matplotlib.pyplot as plt
 from configs.configurations import (
-    MLPTrainConfig, PINNTrainConfig, HNNTrainConfig, LNNTrainConfig, InferenceConfig, BenchmarkConfig,
+    MLPTrainConfig, PINNTrainConfig, HNNTrainConfig, LNNTrainConfig,
 )
 from model.physics_loss import (
-    PhysicsLoss, MLPLoss, HNNLoss, LNNLoss,
+    MLPLoss, HNNLoss, LNNLoss,
 )
 
 
@@ -109,6 +103,9 @@ class TrainState(NamedTuple):
     params:    any
     opt_state: any
     rng:       jax.random.PRNGKey
+
+class LossOptions(NamedTuple):
+    use_auto_lambda: bool
 
 # ── Layer configs ─────────────────────────────────────────────────────────────
 class FCLayerConfig(NamedTuple):
@@ -218,6 +215,7 @@ class CrossAttentionConfig(NamedTuple):
     p_dropout:       float
     type:            int = CROSS_ATTENTION
 
+OPTIMIZER_CACHE = {}
 
 # ── Neural Network ────────────────────────────────────────────────────────────
 class NeuralNetwork:
@@ -249,17 +247,12 @@ class NeuralNetwork:
     def __init__(self, config, X=None, y=None):
         self.t0_init = time.time()
 
-        if isinstance(config, BenchmarkConfig):
-            raise NotImplementedError()
-        
-        elif isinstance(config, InferenceConfig):
-            raise NotImplementedError()
-
-        elif isinstance(config, (MLPTrainConfig, PINNTrainConfig, HNNTrainConfig, LNNTrainConfig)):
+        if isinstance(config, (MLPTrainConfig, PINNTrainConfig, HNNTrainConfig, LNNTrainConfig)):
             self.network_config   = config.network
             self.train_config     = config.training
             self.loss_config      = config.loss
             self.type             = config.data.type
+            self.coords           = config.data.coords
 
             self.mode             = "train"
             self.architecture     = list(self.network_config.architecture)
@@ -269,43 +262,39 @@ class NeuralNetwork:
             self.warmup_steps     = self.network_config.warmup_steps
             self.save_filepath    = self.network_config.save_filepath
             self.load_filepath    = self.network_config.load_filepath
+            self.schedule         = self.network_config.schedule
 
             self.seed             = config.system.seed
             self.train_batch_size = self.train_config.batch_size
             self.val_split        = self.train_config.val_split
             self.do_validation    = self.train_config.do_validation
             self.lambda_reg       = self.train_config.lambda_reg
-            self.use_auto_lambda  = self.train_config.use_auto_lambda   
+            self.use_auto_lambda  = self.train_config.use_auto_lambda  
+            
+            self.live_metrics     = self.train_config.live_metrics 
+            self.static_metrics   = self.train_config.static_metrics 
 
             # MLP ───────────────────────────────────────────────────────────
             if isinstance(config, MLPTrainConfig):
                 self.physics_loss      = MLPLoss(self.loss_config)
-                self.init_lambdas      = [self.loss_config.lambda_data, self.lambda_reg]
                 self.physics_values, self.physics_learnable = {}, {}
 
             # PINN ───────────────────────────────────────────────────────────
             elif isinstance(config, PINNTrainConfig):
                 self.physics_loss      = self.loss_config.residual_fn(self.loss_config)
-                self.init_lambdas      = [self.loss_config.lambda_data, self.loss_config.lambda_physics, self.loss_config.lambda_boundary, self.lambda_reg,]
                 self.physics_values, self.physics_learnable = self.extract_physics_params(self.loss_config.physics)
 
             # HNN ───────────────────────────────────────────────────────────
             elif isinstance(config, HNNTrainConfig):
                 self.physics_loss      = HNNLoss(self.loss_config)
-                self.init_lambdas      = [self.loss_config.lambda_eom, self.lambda_reg]
                 self.physics_values, self.physics_learnable = self.extract_physics_params(self.loss_config.physics)
 
-                if self.loss_config.hamiltonian.penalize_correction:
-                    self.init_lambdas.insert(-1, self.loss_config.lambda_correction)
 
             # LNN ───────────────────────────────────────────────────────────
             elif isinstance(config, LNNTrainConfig):
                 self.physics_loss      = LNNLoss(self.loss_config)
-                self.init_lambdas      = [self.loss_config.lambda_eom, self.lambda_reg]
                 self.physics_values, self.physics_learnable = self.extract_physics_params(self.loss_config.physics)
 
-                if self.loss_config.lagrangian.penalize_correction:
-                    self.init_lambdas.insert(-1, self.loss_config.lambda_correction)
         else:
             raise ValueError(f"Unknown config type: {type(config)}")
         
@@ -315,7 +304,7 @@ class NeuralNetwork:
         self.architecture = [dict(layer) for layer in self.architecture]
         self.num_layers   = len(self.architecture)
 
-        self.initiate_metrics()
+        self.init_metrics()
         self.params               = []
         self.layer_configs        = []
 
@@ -323,6 +312,10 @@ class NeuralNetwork:
             self.physics_loss.loss_names + ("reg",)
             if self.physics_loss is not None else ()
         )
+
+        lambdas = [getattr(self.loss_config, f.name) for f in dataclasses.fields(self.loss_config)
+                   if f.name.startswith("lambda_")]
+        self.init_lambdas = [v for v in lambdas if v is not None] + [self.lambda_reg]
 
         init_log_lambdas = jnp.array(
             [-0.5 * float(jnp.log(jnp.clip(jnp.array(2.0 * lam), 1e-8)))
@@ -340,39 +333,63 @@ class NeuralNetwork:
         if self.mode == "train":
             self.init_train(X, y)
         else:
-            self.init_inference()
+            raise NotImplementedError()
 
         self.layer_output_channels = [self.input_size[-1]]
         self.initializers()
         self.initialize_params()
+        self.loss_options     = LossOptions(use_auto_lambda=self.use_auto_lambda)
 
         if self.mode == "train":
-            total_steps       = self.epochs * max(1, self.N_train // self.train_batch_size)
-            self.decay_steps  = self.decay_steps  if self.decay_steps  is not None else total_steps
-            self.warmup_steps = self.warmup_steps if self.warmup_steps is not None else max(200, self.decay_steps // 40)
+            self.steps_per_epoch = max(1, self.N_train // self.train_batch_size)
+            total_steps      = self.epochs * self.steps_per_epoch
+            self.decay_steps = self.decay_steps if self.decay_steps is not None else total_steps
+            desired_warmup   = self.warmup_steps if self.warmup_steps is not None else max(200, self.decay_steps // 40)
+            self.warmup_steps = min(desired_warmup, max(1, self.decay_steps - 1))
+            end_value = self.network_config.end_value
 
-            self.lr_schedule = optax.warmup_cosine_decay_schedule(
-                init_value=0.0,
-                peak_value=self.learning_rate,
-                warmup_steps=self.warmup_steps,
-                decay_steps=self.decay_steps,
-                end_value=1e-5,
-            )
+            if self.schedule == "plateau":
+                self.lr_schedule = optax.join_schedules(
+                    schedules=[
+                        optax.linear_schedule(0.0, self.learning_rate, self.warmup_steps),
+                        optax.constant_schedule(self.learning_rate),
+                    ],
+                    boundaries=[self.warmup_steps],
+                )
+            else:
+                self.lr_schedule = optax.warmup_cosine_decay_schedule(
+                    init_value=0.0,
+                    peak_value=self.learning_rate,
+                    warmup_steps=self.warmup_steps,
+                    decay_steps=self.decay_steps,
+                    end_value=end_value,
+                )
             lambda_lr = optax.warmup_cosine_decay_schedule(
                 init_value=0.0,
                 peak_value=1e-4,
                 warmup_steps=self.warmup_steps,
                 decay_steps=self.decay_steps,
-                end_value=1e-5,
+                end_value=end_value,
             )
             lambda_opt = optax.adam(lambda_lr) if self.use_auto_lambda else optax.set_to_zero()
 
+            net_chain = [
+                optax.clip_by_global_norm(1.0),
+                optax.adamw(self.lr_schedule, weight_decay=1e-5),
+            ]
+            if self.schedule == "plateau":
+                net_chain.append(optax.contrib.reduce_on_plateau(
+                    factor=self.network_config.plateau_factor,
+                    patience=self.network_config.plateau_patience,
+                    rtol=self.network_config.plateau_rtol,
+                    cooldown=self.network_config.plateau_cooldown,
+                    accumulation_size=self.steps_per_epoch,
+                    min_scale=self.network_config.plateau_min_scale,
+                ))
+
             param_labels = {"net": "net", "log_lambdas": "lambda"}
             transforms = {
-                "net": optax.chain(
-                    optax.clip_by_global_norm(1.0),
-                    optax.adamw(self.lr_schedule, weight_decay=1e-5),
-                ),
+                "net": optax.chain(*net_chain),
                 "lambda": lambda_opt,
             }
             if self.physics_values:
@@ -383,7 +400,17 @@ class NeuralNetwork:
                 transforms["physics_learn"] = optax.adam(self.lr_schedule)
                 transforms["physics_fixed"] = optax.set_to_zero()
 
-            self.optimizer = optax.multi_transform(transforms, param_labels)
+            nc = self.network_config
+            opt_key = (
+                self.schedule, self.learning_rate, self.epochs, self.steps_per_epoch,
+                self.decay_steps, self.warmup_steps, end_value, self.use_auto_lambda,
+                nc.plateau_factor, nc.plateau_patience, nc.plateau_rtol,
+                nc.plateau_cooldown, nc.plateau_min_scale,
+                tuple(sorted((k, self.physics_learnable.get(k, False)) for k in self.physics_values)),
+            )
+            if opt_key not in OPTIMIZER_CACHE:
+                OPTIMIZER_CACHE[opt_key] = optax.multi_transform(transforms, param_labels)
+            self.optimizer = OPTIMIZER_CACHE[opt_key]
             self.state = TrainState(
                 params=all_params,
                 opt_state=self.optimizer.init(all_params),
@@ -413,8 +440,8 @@ class NeuralNetwork:
     def init_train(self, X, y):
         X = np.asarray(X, dtype=np.float32)
         y = np.asarray(y, dtype=np.float32)
-        X_train, X_val = self.make_train_and_val_points(X, X.shape[0], self.val_split)
-        y_train, y_val = self.make_train_and_val_points(y, y.shape[0], self.val_split)
+        X_train, X_val = self.split_train_val(X, X.shape[0], self.val_split)
+        y_train, y_val = self.split_train_val(y, y.shape[0], self.val_split)
 
         self.N_train     = X_train.shape[0]
         self.input_size  = X_train.shape[1:]
@@ -423,10 +450,7 @@ class NeuralNetwork:
         self.X_train_batched, self.y_train_batched = self.make_train_batch(self.train_batch_size, X_train, y_train)
         self.X_val_batched, self.y_val_batched     = self.make_train_batch(self.train_batch_size, X_val, y_val)
 
-    def init_inference(self):
-        return NotImplementedError
-
-    def make_train_and_val_points(self, X, N, split=0.8):
+    def split_train_val(self, X, N, split=0.8):
         rng  = np.random.default_rng(self.rng_np)
         perm = rng.permutation(N)
         X    = X[perm]
@@ -735,8 +759,8 @@ class NeuralNetwork:
 
         return rng, previous_spatial_shape, previous_channel_size   
 
-    def initiate_metrics(self):
-        self.history = {"train": [], "val": [], "lambdas": []}
+    def init_metrics(self):
+        self.history = {"train": [], "val": [], "eff_lambdas": [], "total_train": [], "total_val": []}
 
     def initializers(self):
         self.initializers = {
@@ -1070,46 +1094,50 @@ class NeuralNetwork:
         return sum(jnp.sum(leaf**2) for leaf in leaves if jnp.asarray(leaf).size > 0)
 
     @staticmethod
-    def total_loss_function(params, X, y, aug_data, num_layers, layer_configs_static, physics_loss, layer_forward_int, rng, epoch=0, training=True):
+    def total_loss_function(params, X, y, loss_options, num_layers, layer_configs_static, physics_loss, layer_forward_int, rng, epoch=0, training=True):
         net_params  = params["net"]
         log_lambdas = params["log_lambdas"]
-        log_lambdas = jnp.clip(log_lambdas, -5.0, 5.0)
+        log_lambdas = jnp.clip(log_lambdas, -10, 10)
         def forward_fn(net_params, X):
             return NeuralNetwork.forward_propagation(net_params, X, num_layers, layer_configs_static, layer_forward_int, rng, training)
 
         loss_r      = NeuralNetwork.regularization_loss_function(net_params)
         call_fn     = physics_loss if training else physics_loss.val_call
-        all_losses  = call_fn(params, X, y, aug_data, forward_fn, epoch=epoch)
+        all_losses  = call_fn(params, X, y, loss_options, forward_fn, epoch=epoch)
         all_losses = jnp.concatenate([all_losses, jnp.array([loss_r])])
         eff_lambdas = 0.5 * jnp.exp(-2.0 * log_lambdas)
-        total_loss  = jnp.dot(eff_lambdas, all_losses) + jnp.sum(log_lambdas)
+        raw_total   = jnp.dot(eff_lambdas, all_losses)
+        if loss_options.use_auto_lambda:
+            raw_total = raw_total + jnp.sum(log_lambdas)
+        scale       = jax.lax.stop_gradient(jnp.sum(eff_lambdas))
+        total_loss  = raw_total / scale
         return total_loss, all_losses
 
     @staticmethod
-    @partial(jax.jit, static_argnames=("layer_configs_static", "physics_loss", "layer_forward_int", "num_layers", "optimizer"))
-    def train_step_jitted(state, X, y, aug_data, num_layers, layer_configs_static, physics_loss, layer_forward_int, optimizer, epoch=0):
+    @partial(jax.jit, static_argnames=("layer_configs_static", "physics_loss", "layer_forward_int", "num_layers", "optimizer", "loss_options"))
+    def train_step_jitted(state, X, y, loss_options, num_layers, layer_configs_static, physics_loss, layer_forward_int, optimizer, epoch=0):
         params, opt_state, rng = state
         rng, subkey = random.split(rng)
 
         def loss_fn(p):
             total_loss, all_losses = NeuralNetwork.total_loss_function(
-                p, X, y, aug_data, num_layers, layer_configs_static, physics_loss, layer_forward_int, subkey, epoch=epoch
+                p, X, y, loss_options, num_layers, layer_configs_static, physics_loss, layer_forward_int, subkey, epoch=epoch
             )
             return total_loss, all_losses
 
-        (_, all_losses), grads = value_and_grad(loss_fn, has_aux=True)(params)
-        updates, new_opt_state = optimizer.update(grads, opt_state, params)
+        (total_loss, all_losses), grads = value_and_grad(loss_fn, has_aux=True)(params)
+        updates, new_opt_state = optimizer.update(grads, opt_state, params, value=total_loss)
         new_params = optax.apply_updates(params, updates)
         new_state  = TrainState(new_params, new_opt_state, rng)
         return new_state, all_losses
 
     @staticmethod
-    @partial(jax.jit, static_argnames=("layer_configs_static", "physics_loss", "layer_forward_int", "num_layers", "optimizer"))
-    def train_epoch_jitted(state, X_train, y_train, aug_data, num_layers, layer_configs_static, physics_loss, layer_forward_int, optimizer, epoch=0):
+    @partial(jax.jit, static_argnames=("layer_configs_static", "physics_loss", "layer_forward_int", "num_layers", "optimizer", "loss_options"))
+    def train_epoch_jitted(state, X_train, y_train, loss_options, num_layers, layer_configs_static, physics_loss, layer_forward_int, optimizer, epoch=0):
         def train_step(state, batch):
             Xb, yb = batch
             new_state, losses = NeuralNetwork.train_step_jitted(
-                state, Xb, yb, aug_data, num_layers, layer_configs_static, physics_loss, layer_forward_int, optimizer, epoch=epoch
+                state, Xb, yb, loss_options, num_layers, layer_configs_static, physics_loss, layer_forward_int, optimizer, epoch=epoch
             )
             return new_state, losses
 
@@ -1118,22 +1146,22 @@ class NeuralNetwork:
         return state, all_losses
 
     @staticmethod
-    @partial(jax.jit, static_argnames=("layer_configs_static", "physics_loss", "layer_forward_int", "num_layers"))
-    def val_step_jitted(state, X_val, y_val, aug_data, num_layers, layer_configs_static, physics_loss, layer_forward_int):
+    @partial(jax.jit, static_argnames=("layer_configs_static", "physics_loss", "layer_forward_int", "num_layers", "loss_options"))
+    def val_step_jitted(state, X_val, y_val, loss_options, num_layers, layer_configs_static, physics_loss, layer_forward_int):
         params = state.params
         rng    = random.PRNGKey(0)
         _, all_losses = NeuralNetwork.total_loss_function(
-            params, X_val, y_val, aug_data, num_layers, layer_configs_static, physics_loss, layer_forward_int, rng, training=False,
+            params, X_val, y_val, loss_options, num_layers, layer_configs_static, physics_loss, layer_forward_int, rng, training=False,
         )
         return all_losses
 
     @staticmethod
-    @partial(jax.jit, static_argnames=("layer_configs_static", "physics_loss", "layer_forward_int", "num_layers"))
-    def val_epoch_jitted(state, X_val, y_val, aug_data, num_layers, layer_configs_static, physics_loss, layer_forward_int):
+    @partial(jax.jit, static_argnames=("layer_configs_static", "physics_loss", "layer_forward_int", "num_layers", "loss_options"))
+    def val_epoch_jitted(state, X_val, y_val, loss_options, num_layers, layer_configs_static, physics_loss, layer_forward_int):
         def val_step(state, batch):
             Xb, yb = batch
             losses = NeuralNetwork.val_step_jitted(
-                state, Xb, yb, aug_data, num_layers, layer_configs_static, physics_loss, layer_forward_int
+                state, Xb, yb, loss_options, num_layers, layer_configs_static, physics_loss, layer_forward_int
             )
             return state, losses
 
@@ -1158,28 +1186,34 @@ class NeuralNetwork:
         return "█" * filled + "░" * (width - filled)
 
     @staticmethod
-    def print_training_ui(epoch, epochs, train_losses, val_losses, loss_names, log_lambdas, start_time, physics_desc=None):
+    def print_training(epoch, epochs, train_losses, val_losses, loss_names, log_lambdas, lambda_eff, start_time, loss_options, physics_desc=None, live_metrics=True):
         elapsed = time.time() - start_time
         it_s    = epoch / elapsed if elapsed > 0 else 0
         eta     = (epochs - epoch) / it_s if it_s > 0 else 0
         bar     = NeuralNetwork.build_bar(epoch / epochs)
-        log_lambdas = np.clip(log_lambdas, -5.0, 5.0)
-        eff_lam = 0.5 * np.exp(-2.0 * log_lambdas)
 
         t_mean = np.mean(train_losses, axis=0)
         v_mean = np.mean(val_losses, axis=0) if val_losses is not None else None
 
-        total_train = float(np.dot(eff_lam, t_mean) + np.sum(log_lambdas))
-        total_val   = float(np.dot(eff_lam, v_mean) + np.sum(log_lambdas)) if v_mean is not None else None
+        scale       = np.sum(lambda_eff)
+        const       = np.sum(log_lambdas) if loss_options.use_auto_lambda else 0.0
+        total_train = float((np.dot(lambda_eff, t_mean) + const) / scale)
+        total_val   = float((np.dot(lambda_eff, v_mean) + const) / scale) if v_mean is not None else None
 
+        if not live_metrics:
+            return total_train, total_val
+        
         lines = [f"Epoch {epoch}/{epochs}  {bar}"]
         v_str = f"  val={total_val:.3e}" if total_val is not None else ""
         lines.append(f"  {'total':<14}: train={total_train:.3e}{v_str}")
         for i, name in enumerate(loss_names):
             v_str = f"  val={v_mean[i]:.3e}" if v_mean is not None else ""
-            lines.append(f"  {name:<14}: train={t_mean[i]:.3e}{v_str}  λ={eff_lam[i]:.3e}")
+            lines.append(f"  {name:<14}: train={t_mean[i]:.3e}{v_str}  λ={lambda_eff[i]:.3e}")
         if physics_desc:
-            lines.append(f"  physics       : {physics_desc}")
+            def fmt(v):
+                return f"{v:.4f}" if isinstance(v, float) else str(v)
+            physics_str = "  ".join(f"{k}={fmt(v)}" for k, v in physics_desc.items())
+            lines.append(f"  physics       : {physics_str}")
         lines.append(
             f"  speed={it_s:.2f} it/s  "
             f"elapsed={NeuralNetwork.format_time(elapsed)}  "
@@ -1189,10 +1223,9 @@ class NeuralNetwork:
         n = len(lines)
         sys.stdout.write(f"\033[{n}F\033[J")
         print("\n".join(lines))
+        return total_train, total_val
 
     def warmup_model(self):
-        aux_data = self.physics_loss.aux_data
-
         X_step = jnp.zeros((self.train_batch_size, *self.input_size),  dtype=jnp.float32)
         y_step = jnp.zeros((self.train_batch_size, *self.output_size), dtype=jnp.float32)
 
@@ -1201,13 +1234,13 @@ class NeuralNetwork:
             self.layer_configs_static, self.layer_forward_int, self.state.rng,
         )
         _ = NeuralNetwork.train_step_jitted(
-            self.state, X_step, y_step, aux_data,
+            self.state, X_step, y_step, self.loss_options,
             self.num_layers, self.layer_configs_static,
             self.physics_loss, self.layer_forward_int, self.optimizer,
         )
         if self.do_validation:
             _ = NeuralNetwork.val_step_jitted(
-                self.state, X_step, y_step, aux_data,
+                self.state, X_step, y_step, self.loss_options,
                 self.num_layers, self.layer_configs_static,
                 self.physics_loss, self.layer_forward_int,
             )
@@ -1216,13 +1249,13 @@ class NeuralNetwork:
         y_epoch = y_step[None]
 
         _ = NeuralNetwork.train_epoch_jitted(
-            self.state, X_epoch, y_epoch, aux_data,
+            self.state, X_epoch, y_epoch, self.loss_options,
             self.num_layers, self.layer_configs_static,
             self.physics_loss, self.layer_forward_int, self.optimizer,
         )
         if self.do_validation:
             _ = NeuralNetwork.val_epoch_jitted(
-                self.state, X_epoch, y_epoch, aux_data,
+                self.state, X_epoch, y_epoch, self.loss_options,
                 self.num_layers, self.layer_configs_static,
                 self.physics_loss, self.layer_forward_int,
             )
@@ -1256,22 +1289,24 @@ class NeuralNetwork:
     
     def train_setup(self):
         if not self.warmup:
-            print("Pre-jitting architecture")
+            if self.static_metrics:
+                print("Pre-jitting architecture")
             self.warmup_model()
             jax.block_until_ready(self.state.params)
-            print("Pre-jitting complete")
+            if self.static_metrics:
+                print("Pre-jitting complete")
             self.warmup = True
 
         self.train_start_time = time.time()
-        self.training_stats()
+        if self.static_metrics:
+            self.training_stats()
 
     def train_epoch(self, epoch):
-        aux_data   = self.physics_loss.aux_data
         loss_names = self.loss_names
 
         self.state, train_losses = NeuralNetwork.train_epoch_jitted(
             self.state,
-            self.X_train_batched, self.y_train_batched, aux_data,
+            self.X_train_batched, self.y_train_batched, self.loss_options,
             self.num_layers, self.layer_configs_static, self.physics_loss,
             self.layer_forward_int, self.optimizer, epoch=jnp.asarray(epoch),
         )
@@ -1280,22 +1315,26 @@ class NeuralNetwork:
         if self.do_validation:
             val_losses = NeuralNetwork.val_epoch_jitted(
                 self.state,
-                self.X_val_batched, self.y_val_batched, aux_data,
+                self.X_val_batched, self.y_val_batched, self.loss_options,
                 self.num_layers, self.layer_configs_static, self.physics_loss,
                 self.layer_forward_int,
 
             )
 
-        log_lambdas  = jax.device_get(self.state.params["log_lambdas"])
+        log_lambdas  = np.clip(jax.device_get(self.state.params["log_lambdas"]), -10, 10)
+        eff_lambdas  = 0.5 * np.exp(-2.0 * log_lambdas)
         physics_desc = self.physics_loss.describe_physics(self.state.params)
         self.history["train"].append(jax.device_get(train_losses))
         self.history["val"].append(jax.device_get(val_losses) if val_losses is not None else None)
-        self.history["lambdas"].append(log_lambdas)
+        self.history["eff_lambdas"].append(eff_lambdas)
 
-        NeuralNetwork.print_training_ui(
+        total_train, total_val = NeuralNetwork.print_training(
             epoch, self.epochs, train_losses, val_losses,
-            loss_names, log_lambdas, self.train_start_time, physics_desc,
+            loss_names, log_lambdas, eff_lambdas, self.train_start_time, self.loss_options, physics_desc, self.live_metrics,
         )
+
+        self.history["total_train"].append(total_train)
+        self.history["total_val"].append(total_val)
 
         if epoch % 5000 == 0 and self.save_filepath is not None:
             self.save_weights(training=True, epoch=epoch)
@@ -1347,18 +1386,6 @@ class NeuralNetwork:
         if not inference:
             print(f"Loaded weights from {self.load_filepath}")
 
-    def release_gpu(self):
-        self.state  = None
-        self.params = None
-        gc.collect()
-        jax.clear_caches()  
-
-    def predict(self, X):
-        return NeuralNetwork.forward_propagation(
-            self.state.params["net"], X, self.num_layers,
-            self.layer_configs_static, self.layer_forward_int, self.state.rng, training=False,
-        )
-
     def trajectories(self, t, state0=None):
         def forward_fn(net_params, X):
             return NeuralNetwork.forward_propagation(
@@ -1375,9 +1402,26 @@ class NeuralNetwork:
         if state0 is None:
             raise ValueError()
 
-        field  = self.physics_loss.dynamics(self.state.params, forward_fn)
-        state0 = jnp.asarray(state0, dtype=jnp.float32)
-        dts    = t[1:] - t[:-1]
+        state0     = jnp.asarray(state0, dtype=jnp.float32)
+        dts        = t[1:] - t[:-1]
+        integrator = getattr(self.physics_loss, "integrator", "rk4")
+
+        if integrator == "leapfrog":
+            n = self.physics_loss.n_dof
+            H = self.physics_loss.hamiltonian_fn(self.state.params, forward_fn)
+
+            def leapfrog_step(state, dt):
+                q, p   = state[:n], state[n:]
+                p_half = p - 0.5 * dt * jax.grad(lambda q_: H(jnp.concatenate([q_, p])))(q)
+                q_new  = q + dt * jax.grad(lambda p_: H(jnp.concatenate([q, p_])))(p_half)
+                p_new  = p_half - 0.5 * dt * jax.grad(lambda q_: H(jnp.concatenate([q_, p_half])))(q_new)
+                new_state = jnp.concatenate([q_new, p_new])
+                return new_state, new_state
+
+            _, states = lax.scan(leapfrog_step, state0, dts)
+            return np.asarray(jnp.concatenate([state0[None], states], axis=0))
+
+        field = self.physics_loss.dynamics(self.state.params, forward_fn)
 
         def rk4_step(state, dt):
             k1 = field(state)
@@ -1389,82 +1433,6 @@ class NeuralNetwork:
 
         _, states = lax.scan(rk4_step, state0, dts)
         return np.asarray(jnp.concatenate([state0[None], states], axis=0))
-
-    def plot_training_history(self, log_scale=False, save_path=None, show=True):
-        if not self.history["train"]:
-            print("No training history to plot.")
-            return None
-
-        loss_names  = self.loss_names
-        train_stack = np.stack([np.mean(np.asarray(epoch), axis=0) for epoch in self.history["train"]])
-        has_val     = self.history["val"][0] is not None
-        if has_val:
-            val_stack = np.stack([np.mean(np.asarray(epoch), axis=0) for epoch in self.history["val"]])
-        epochs = np.arange(1, train_stack.shape[0] + 1)
-
-        log_lambdas_stack = np.stack(self.history["lambdas"])
-        eff_lambdas_stack = 0.5 * np.exp(-2.0 * log_lambdas_stack)
-        total_train = np.sum(eff_lambdas_stack * train_stack, axis=1) + np.sum(log_lambdas_stack, axis=1)
-        if has_val:
-            total_val = np.sum(eff_lambdas_stack * val_stack, axis=1) + np.sum(log_lambdas_stack, axis=1)
-
-        n_losses = len(loss_names)
-        fig, axes = plt.subplots(n_losses + 1, 1, figsize=(8, 3 * (n_losses + 1)), squeeze=False)
-
-        ax = axes[0, 0]
-        ax.plot(epochs, total_train, label="train")
-        if has_val:
-            ax.plot(epochs, total_val, label="val")
-        if log_scale:
-            ax.set_yscale("log")
-        ax.set_title("total")
-        ax.set_xlabel("epoch")
-        ax.set_ylabel("loss")
-        ax.legend()
-        ax.grid(alpha=0.3)
-
-        for i, name in enumerate(loss_names):
-            ax = axes[i + 1, 0]
-            ax.plot(epochs, train_stack[:, i], label="train")
-            if has_val:
-                ax.plot(epochs, val_stack[:, i], label="val")
-            if log_scale:
-                ax.set_yscale("log")
-            ax.set_title(name)
-            ax.set_xlabel("epoch")
-            ax.set_ylabel("loss")
-            ax.legend()
-            ax.grid(alpha=0.3)
-        fig.tight_layout()
-        if show:
-            plt.show()
-        return fig
-
-    def plot_lambdas_history(self, save_path=None, show=True):
-        if not self.history["lambdas"]:
-            print("No lambda history to plot.")
-            return None
-
-        loss_names     = self.loss_names
-        log_lambdas    = np.stack(self.history["lambdas"])
-        eff_lambdas    = 0.5 * np.exp(-2.0 * log_lambdas)
-        epochs         = np.arange(1, log_lambdas.shape[0] + 1)
-
-        fig, ax = plt.subplots(figsize=(8, 4))
-        for i, name in enumerate(loss_names):
-            ax.plot(epochs, eff_lambdas[:, i], label=name)
-        ax.set_xlabel("epoch")
-        ax.set_ylabel("effective λ")
-        ax.set_title("Kendall loss weights")
-        ax.legend()
-        ax.grid(alpha=0.3)
-        fig.tight_layout()
-        if show:
-            plt.show()
-        return fig
-
-    def benchmark(self, n_rounds=10, n_warmups=1):
-        raise NotImplementedError()
 
 # To implement: 
 # Add Neural ODE layer

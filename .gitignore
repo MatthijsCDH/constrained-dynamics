@@ -1,0 +1,54 @@
+# Environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.cache/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# AI assistants
+CLAUDE.md
+.claude/
+.claudeignore
+AGENTS.md
+GEMINI.md
+.cursor/
+.cursorrules
+.cursorignore
+.aider*
+.continue/
+.codeium/
+.windsurf/
+.specstory/
+.mcp.json
+.github/copilot-instructions.md
+
+# Trained weights
+checkpoints/
+best_weights/
+*.pkl
+
+# Benchmark and training output
+systems/*/analysis/
+systems/*/*/plots/
+systems/*/*/results/
+
+# Docs site build
+site/
+tables.py
+
+# Local notes and reference material
+TODO
+Research/
+scratchpad/

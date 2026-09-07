@@ -17,7 +17,7 @@ def dissipation_term(q, qdot, physics, gamma_bounds):
 def describe(physics, omega_bounds, gamma_bounds):
     omega = float(bounded_param(physics["log_omega"], *omega_bounds))
     gamma = float(bounded_param(physics["log_gamma"], *gamma_bounds))
-    return f"omega={omega:.4f}  gamma={gamma:.4f}"
+    return {"omega": omega, "gamma": gamma}
 
 
 def make_lagrangian_parametric(omega_bounds, gamma_bounds):
@@ -26,6 +26,20 @@ def make_lagrangian_parametric(omega_bounds, gamma_bounds):
         known_term=functools.partial(known_term, omega_bounds=omega_bounds),
         dissipation_term=functools.partial(dissipation_term, gamma_bounds=gamma_bounds),
         describe=functools.partial(describe, omega_bounds=omega_bounds, gamma_bounds=gamma_bounds),
+        penalize_correction=True,
+    )
+
+
+def describe_omega_only(physics, omega_bounds):
+    omega = float(bounded_param(physics["log_omega"], *omega_bounds))
+    return {"omega": omega}
+
+
+def make_lagrangian_learned_dissipation(omega_bounds):
+    return LagrangianConfig(
+        n_dof=1, dissipation="learned_dissipation",
+        known_term=functools.partial(known_term, omega_bounds=omega_bounds),
+        describe=functools.partial(describe_omega_only, omega_bounds=omega_bounds),
         penalize_correction=True,
     )
 

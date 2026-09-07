@@ -12,7 +12,7 @@ def known_term(qp, physics, omega_bounds):
 
 def describe(physics, omega_bounds):
     omega = float(bounded_param(physics["log_omega"], *omega_bounds))
-    return f"omega={omega:.4f}"
+    return {"omega": omega}
 
 
 def make_hamiltonian_parametric(omega_bounds):

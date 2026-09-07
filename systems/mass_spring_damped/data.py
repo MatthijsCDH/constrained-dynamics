@@ -3,45 +3,47 @@ import numpy as np
 
 class mass_spring_damped_data_generator:
     def __init__(self, config, seed):
-        self.config = config
-        self.omega  = config.system.system_params["omega"]
-        self.gamma  = config.system.system_params["gamma"]
-        self.seed   = seed
-        if config.type not in ("field", "trajectory"):
+        self.data_cfg   = config.data
+        self.system_cfg = config.system
+        self.omega      = config.system.system_params["omega"]
+        self.gamma      = config.system.system_params["gamma"]
+        self.seed       = seed
+        if self.data_cfg.type not in ("field", "trajectory"):
             raise TypeError("Insert a known data generating type like field or trajectory.")
 
     def add_noise(self, rng, arr, sigma):
-        return (arr + rng.normal(0.0, sigma, size=arr.shape))
+        scale = np.std(arr, axis=0, keepdims=True)
+        return arr + rng.normal(0.0, sigma, size=arr.shape) * scale
 
     def generate_field_data(self):
         rng = np.random.default_rng(self.seed)
-        q = rng.uniform(*self.config.q_range, size=self.config.field_N)
-        p = rng.uniform(*self.config.p_range, size=self.config.field_N)
+        q = rng.uniform(*self.data_cfg.q_range, size=self.data_cfg.field_N)
+        p = rng.uniform(*self.data_cfg.p_range, size=self.data_cfg.field_N)
 
         X = np.stack([q, p], axis=-1)
         y = np.stack([p, -(self.omega ** 2) * q - self.gamma * p], axis=-1)
 
-        X = self.add_noise(rng, X, self.config.field_sigma)
-        y = self.add_noise(rng, y, self.config.field_sigma)
+        X = self.add_noise(rng, X, self.data_cfg.field_sigma_x)
+        y = self.add_noise(rng, y, self.data_cfg.field_sigma_y)
         return X, y
 
     def generate_trajectory_data(self):
-        q0, p0 = self.config.boundary_conditions
+        q0, p0 = self.data_cfg.initial_conditions
         rng = np.random.default_rng(self.seed)
-        t   = np.sort(rng.uniform(0.0, self.config.period, size=self.config.trajectory_N))
+        t   = np.sort(rng.uniform(0.0, self.data_cfg.period, size=self.data_cfg.trajectory_N))
 
         traj = self.true_trajectory(q0, p0, t, coords="canonical")
         X = t[:, None]
         y = traj[:, :1]
 
-        X = self.add_noise(rng, X, self.config.trajectory_sigma)
-        y = self.add_noise(rng, y, self.config.trajectory_sigma)
+        X = self.add_noise(rng, X, self.data_cfg.trajectory_sigma_x)
+        y = self.add_noise(rng, y, self.data_cfg.trajectory_sigma_y)
         return X, y
 
     def build_training_data(self):
-        if self.config.type == "field":
+        if self.data_cfg.type == "field":
             return self.generate_field_data()
-        elif self.config.type == "trajectory":
+        elif self.data_cfg.type == "trajectory":
             return self.generate_trajectory_data()
         else:
             raise TypeError("Insert a known data generating type like field or trajectory.")
