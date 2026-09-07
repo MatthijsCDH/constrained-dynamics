@@ -6,7 +6,7 @@ A PINN is trained on trajectory data $(t_i, u_i)$ and maps time directly to stat
   <img src="../images/PINN1.svg" width="680" alt="PINN architecture: time in, state out, residual of the governing equation evaluated by autodiff">
 </p>
 
-$t$ in, $u_\theta(t)$ out. The derivatives the residual needs are taken with `jax.grad` on the network's own output, so the governing equation is checked exactly rather than approximated by finite differences.
+The derivatives the residual needs are taken with `jax.grad` on the network's own output, so the governing equation is checked exactly rather than approximated by finite differences.
 
 ## Loss function
 
