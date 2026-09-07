@@ -12,7 +12,7 @@ where $J^{T} = -J$. Moreover, because time does not explicitly enter the trainin
 
 
 <p align="center">
-  <img src="../images/HNN.svg" width="520" alt="HNN architecture: canonical (q,p) in, scalar Hamiltonian out, dynamics via symplectic gradient">
+  <img src="../images/HNN.svg" width="680" alt="HNN architecture: canonical (q,p) in, scalar Hamiltonian out, dynamics via symplectic gradient">
 </p>
 
 Canonical $(q_i, p_i)$ in, scalar $\mathcal{H}$ out. Hamilton's equations, $\dot q_i = \partial \mathcal{H}/\partial p_i$ and $\dot p_i = -\partial \mathcal{H}/\partial q_i$, are read off the network's own output by autodiff, not learned separately.

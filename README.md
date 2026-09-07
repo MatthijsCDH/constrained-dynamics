@@ -9,9 +9,11 @@ A JAX framework for comparing approaches to learning the dynamics of physical sy
 | [HNN](docs/methods/hnn.md) | a hard constraint on canonical coordinates `(q, p)` | `(q, p) → H` | field |
 | [LNN](docs/methods/lnn.md) | a hard constraint on generalized coordinates `(q, q̇)` | `(q, q̇) → L` | field |
 
-| HNN | LNN |
-|:---:|:---:|
-| <img src="docs/images/HNN.svg" width="380" alt="HNN architecture"> | <img src="docs/images/LNN.svg" width="380" alt="LNN architecture"> |
+<p align="center">
+  <img src="docs/images/HNN.svg" width="760" alt="HNN architecture: canonical coordinates in, scalar Hamiltonian out, dynamics by autodiff, with the two dissipative extensions">
+</p>
+
+The HNN, with its conservative core and both dissipative extensions. Each method page carries its own diagram.
 
 ## Documentation
 

@@ -3,7 +3,7 @@
 A PINN is trained on trajectory data $(t_i, u_i)$ and maps time directly to state, $u_\theta(t)$. Unlike the HNN and LNN it carries no architectural constraint, with the network being a standard MLP, and the physics enters entirely through the loss, as a residual of the governing equation evaluated wherever the solution is required to hold. That residual is what makes a PINN predict beyond the temporal domain covered by the dataset.
 
 <p align="center">
-  <img src="../images/PINN1.svg" width="520" alt="PINN architecture: time in, state out, residual of the governing equation evaluated by autodiff">
+  <img src="../images/PINN1.svg" width="680" alt="PINN architecture: time in, state out, residual of the governing equation evaluated by autodiff">
 </p>
 
 $t$ in, $u_\theta(t)$ out. The derivatives the residual needs are taken with `jax.grad` on the network's own output, so the governing equation is checked exactly rather than approximated by finite differences.
