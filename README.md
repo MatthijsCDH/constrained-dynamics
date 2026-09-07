@@ -9,10 +9,9 @@ A JAX framework for comparing approaches to learning the dynamics of physical sy
 | [HNN](docs/methods/hnn.md) | a hard constraint on canonical coordinates `(q, p)` | `(q, p) → H` | field |
 | [LNN](docs/methods/lnn.md) | a hard constraint on generalized coordinates `(q, q̇)` | `(q, q̇) → L` | field |
 
-<p align="center">
-  <img src="docs/images/HNN1.svg" width="440" alt="HNN architecture">
-  <img src="docs/images/LNN1.svg" width="440" alt="LNN architecture">
-</p>
+| HNN | LNN |
+|:---:|:---:|
+| <img src="docs/images/HNN.svg" width="380" alt="HNN architecture"> | <img src="docs/images/LNN.svg" width="380" alt="LNN architecture"> |
 
 ## Documentation
 

@@ -3,6 +3,8 @@ site_description: Comparing MLP, PINN, HNN and LNN
 repo_url: https://github.com/MatthijsCDH/constrained-dynamics
 repo_name: MatthijsCDH/constrained-dynamics
 
+use_directory_urls: false
+
 theme:
   name: material
   palette:

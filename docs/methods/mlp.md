@@ -4,7 +4,7 @@ This is a standard feedforward network with no physics inductive bias, which ser
 
 | Field mode | Trajectory mode |
 |:---:|:---:|
-| <img src="../images/MLP2.svg" width="420" alt="MLP architecture in field mode"> | <img src="../images/MLP1.svg" width="420" alt="MLP architecture in trajectory mode"> |
+| <img src="../images/MLP2.svg" width="340" alt="MLP architecture in field mode"> | <img src="../images/MLP1.svg" width="340" alt="MLP architecture in trajectory mode"> |
 | State `s` in, time-derivative `ṡ` out. | Time `t` (plus a spatial coordinate `x` for PDE-type systems) in, predicted state/field value `u(x, t)` out. |
 
 ## Loss function

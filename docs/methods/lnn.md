@@ -13,7 +13,7 @@ which is constant along the Euler-Lagrange flow for any $L(q, \dot q)$ the netwo
 The difference with an HNN lies in the coordinates and in how the dynamics are recovered. An HNN requires the canonical momentum $p$, which is system-specific and has to be derived before training can start, whereas an LNN takes $(q, \dot q)$ directly. In return, Hamilton's equations are first order and yield the dynamics from a single gradient, while the Euler-Lagrange equation is second order and coupled, so the accelerations follow from a linear solve instead.
 
 <p align="center">
-  <img src="../images/LNN1.svg" width="520" alt="LNN architecture: generalized coordinates and velocities in, scalar Lagrangian out, accelerations via the Euler-Lagrange solve">
+  <img src="../images/LNN.svg" width="520" alt="LNN architecture: generalized coordinates and velocities in, scalar Lagrangian out, accelerations via the Euler-Lagrange solve">
 </p>
 
 $(q_i, \dot q_i)$ in, scalar $\mathcal{L}$ out. The accelerations follow from the Euler-Lagrange equation, which requires second derivatives of the network output rather than the single gradient an HNN needs.

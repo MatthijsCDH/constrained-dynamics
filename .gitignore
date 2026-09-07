@@ -48,6 +48,9 @@ systems/*/*/results/
 site/
 tables.py
 
+# Figure sources (the published SVGs are generated from these)
+docs/images/*.pdf
+
 # Local notes and reference material
 TODO
 Research/
