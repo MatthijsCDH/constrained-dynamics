@@ -1,0 +1,2090 @@
+{
+  "score": 0.0003455719300696475,
+  "best_params": {
+    "learning_rate": 0.008972612866432512,
+    "lambda_reg": 2.2042254286251653e-06,
+    "lambda_physics": 0.8516933662231992,
+    "lambda_initial": 0.06524339610666338,
+    "causal_epsilon": 90.58458887563643
+  },
+  "best_number": 14,
+  "n_seeds": 5,
+  "epochs": 5000,
+  "n_trials": 60,
+  "data": {
+    "type": "trajectory",
+    "N": 8192,
+    "sigma_y": 0.4,
+    "sigma_x": 0.0
+  },
+  "true_params": {
+    "omega": 2.1
+  },
+  "tuning": {
+    "check_every": 500,
+    "collapse_fraction": 0.5,
+    "collapse_patience": 2
+  },
+  "user_attrs": {
+    "seeds": [
+      {
+        "seed": 0,
+        "score": 9.230276091186914e-05,
+        "fit": 0.14353617410413969,
+        "collapsed": false,
+        "stopped_at": 5000,
+        "physics": {
+          "omega": 2.10050630569458,
+          "q0": 1.0067577362060547,
+          "p0": 0.014506340026855469
+        }
+      },
+      {
+        "seed": 1,
+        "score": 7.272165261712494e-05,
+        "fit": 0.13977620741932176,
+        "collapsed": false,
+        "stopped_at": 5000,
+        "physics": {
+          "omega": 2.099254846572876,
+          "q0": 1.0099821090698242,
+          "p0": -0.015145301818847656
+        }
+      },
+      {
+        "seed": 2,
+        "score": 0.0005513055358955031,
+        "fit": 0.13137112266849263,
+        "collapsed": false,
+        "stopped_at": 5000,
+        "physics": {
+          "omega": 2.0972278118133545,
+          "q0": 1.0035109519958496,
+          "p0": -0.04848837852478027
+        }
+      },
+      {
+        "seed": 3,
+        "score": 0.0008396096262565011,
+        "fit": 0.13049073549872767,
+        "collapsed": false,
+        "stopped_at": 5000,
+        "physics": {
+          "omega": 2.097727060317993,
+          "q0": 0.9898262023925781,
+          "p0": -0.021421432495117188
+        }
+      },
+      {
+        "seed": 4,
+        "score": 0.0001719200746672392,
+        "fit": 0.1445320915691711,
+        "collapsed": false,
+        "stopped_at": 5000,
+        "physics": {
+          "omega": 2.0993502140045166,
+          "q0": 1.0010786056518555,
+          "p0": -0.029497861862182617
+        }
+      }
+    ],
+    "n_collapsed": 0,
+    "score_std": 0.000301710813414505,
+    "abandoned": false,
+    "train_time": 273.39285708900206
+  },
+  "all_trials": [
+    {
+      "number": 0,
+      "state": "COMPLETE",
+      "value": 0.6833339764466243,
+      "params": {
+        "learning_rate": 0.0012520653814999472,
+        "lambda_reg": 3.7665768415992944e-05,
+        "lambda_physics": 0.06431172050131989,
+        "lambda_initial": 0.0431171005868549,
+        "causal_epsilon": 4.950159553733191
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.688390165437534,
+          "fit": 0.1442070765272399,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.076690435409546,
+            "q0": 1.0041885375976562,
+            "p0": -0.06458854675292969
+          }
+        },
+        {
+          "seed": 1,
+          "score": 0.34853423488715546,
+          "fit": 0.1402916129759435,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0810487270355225,
+            "q0": 1.0116019248962402,
+            "p0": -0.06142258644104004
+          }
+        },
+        {
+          "seed": 2,
+          "score": 0.37974548190843205,
+          "fit": 0.13254893153274855,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0789897441864014,
+            "q0": 1.0131473541259766,
+            "p0": -0.09588027000427246
+          }
+        },
+        {
+          "seed": 3,
+          "score": 1.0,
+          "fit": 0.13298907044606634,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.06404972076416,
+            "q0": 0.9924302101135254,
+            "p0": -0.16156768798828125
+          }
+        },
+        {
+          "seed": 4,
+          "score": 1.0,
+          "fit": 0.1472910186377681,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0645089149475098,
+            "q0": 1.001084327697754,
+            "p0": -0.1633749008178711
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.28454776293535644,
+      "abandoned": false,
+      "train_time": 282.9372448079994
+    },
+    {
+      "number": 1,
+      "state": "COMPLETE",
+      "value": 0.057828042223306286,
+      "params": {
+        "learning_rate": 0.0019578897201213002,
+        "lambda_reg": 1.5414734761917078e-06,
+        "lambda_physics": 0.4734989304499475,
+        "lambda_initial": 0.7780155576901415,
+        "causal_epsilon": 3.41795291206101
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.00019503109068087326,
+          "fit": 0.14353528935875778,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0994362831115723,
+            "q0": 1.00390625,
+            "p0": 0.0008175373077392578
+          }
+        },
+        {
+          "seed": 1,
+          "score": 0.26061263730964435,
+          "fit": 0.1398951266593353,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.104335069656372,
+            "q0": 1.0018572807312012,
+            "p0": -0.03819465637207031
+          }
+        },
+        {
+          "seed": 2,
+          "score": 0.0007268807666974572,
+          "fit": 0.13163147335630246,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.097142219543457,
+            "q0": 1.0086917877197266,
+            "p0": -0.04484987258911133
+          }
+        },
+        {
+          "seed": 3,
+          "score": 0.027461846892775785,
+          "fit": 0.1309748151762283,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0920543670654297,
+            "q0": 0.9934568405151367,
+            "p0": -0.062264442443847656
+          }
+        },
+        {
+          "seed": 4,
+          "score": 0.00014381505673291583,
+          "fit": 0.14459729728958695,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.098518133163452,
+            "q0": 0.9989032745361328,
+            "p0": -0.03561258316040039
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.10193456185111495,
+      "abandoned": false,
+      "train_time": 281.72240311800124
+    },
+    {
+      "number": 2,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0038322168504927897,
+        "lambda_reg": 4.410365667970978e-06,
+        "lambda_physics": 0.05059803874660431,
+        "lambda_initial": 0.5981221901152552,
+        "causal_epsilon": 0.19237305096546492
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.3184886719968014,
+          "fit": 0.1440634570733169,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0837628841400146,
+            "q0": 1.0061602592468262,
+            "p0": -0.04912424087524414
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 58.646155555001314
+    },
+    {
+      "number": 3,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0001493683554419846,
+        "lambda_reg": 1.2620948285169304e-08,
+        "lambda_physics": 0.31467304061660045,
+        "lambda_initial": 0.2160082074140204,
+        "causal_epsilon": 302.02896401586634
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.8156530420602087,
+          "fit": 0.14320805995964955,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.092496395111084,
+            "q0": 0.9997463226318359,
+            "p0": -0.038796424865722656
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 59.07721143699746
+    },
+    {
+      "number": 4,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.009062263471261952,
+        "lambda_reg": 9.903593841281127e-05,
+        "lambda_physics": 0.024234724484675927,
+        "lambda_initial": 0.21957734465394557,
+        "causal_epsilon": 0.29723346443356546
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.46133660689776895,
+          "fit": 0.14446592774754646,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0700135231018066,
+            "q0": 1.006401538848877,
+            "p0": -0.17203688621520996
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 58.82231334700191
+    },
+    {
+      "number": 5,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.001904767808428205,
+        "lambda_reg": 5.209144886889875e-08,
+        "lambda_physics": 0.6823493012435791,
+        "lambda_initial": 0.03677434662105213,
+        "causal_epsilon": 4.5566719139214715
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.25764789679653594,
+          "fit": 0.14651344342801526,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.09228253364563,
+            "q0": 1.0105037689208984,
+            "p0": -0.0371251106262207
+          }
+        },
+        {
+          "seed": 1,
+          "score": 5.516494816020126e-05,
+          "fit": 0.13979108343056051,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0997023582458496,
+            "q0": 1.0106325149536133,
+            "p0": -0.013812065124511719
+          }
+        },
+        {
+          "seed": 2,
+          "score": 0.006056065585519677,
+          "fit": 0.1316836415349519,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.092297315597534,
+            "q0": 1.0061149597167969,
+            "p0": -0.05789899826049805
+          }
+        },
+        {
+          "seed": 3,
+          "score": 0.0005099122080376953,
+          "fit": 0.13058114532212867,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.098369598388672,
+            "q0": 0.9900636672973633,
+            "p0": -0.030106306076049805
+          }
+        },
+        {
+          "seed": 4,
+          "score": 0.2471348909225863,
+          "fit": 0.14817333643129846,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0897436141967773,
+            "q0": 1.0043258666992188,
+            "p0": -0.08040690422058105
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.12262808487524014,
+      "abandoned": true,
+      "train_time": 281.68572181299896
+    },
+    {
+      "number": 6,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0003381514267820292,
+        "lambda_reg": 7.433073841273516e-05,
+        "lambda_physics": 0.023358825194833552,
+        "lambda_initial": 0.05073432032394333,
+        "causal_epsilon": 0.1188937983177301
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.4703744813105061,
+          "fit": 0.14607865426890657,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0611841678619385,
+            "q0": 1.025580883026123,
+            "p0": -0.10171794891357422
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 60.60460324199812
+    },
+    {
+      "number": 7,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0017189806743319388,
+        "lambda_reg": 1.149419640030743e-05,
+        "lambda_physics": 0.07092543214735832,
+        "lambda_initial": 0.6780227021579832,
+        "causal_epsilon": 53.368033027567066
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.729283202430825,
+          "fit": 0.14385454341020912,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.090683937072754,
+            "q0": 1.0086498260498047,
+            "p0": -0.01828169822692871
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 60.14062380199903
+    },
+    {
+      "number": 8,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0005236194873419149,
+        "lambda_reg": 1.5316508243748678e-06,
+        "lambda_physics": 0.12384930898256401,
+        "lambda_initial": 0.0015159204611384714,
+        "causal_epsilon": 46.458679515124714
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.5374168427815545,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 1.5444486141204834,
+            "q0": 0.010395526885986328,
+            "p0": 0.0707244873046875
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 14.736855879000359
+    },
+    {
+      "number": 9,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.002194197617900577,
+        "lambda_reg": 1.1269711680133677e-07,
+        "lambda_physics": 0.0024365700014642,
+        "lambda_initial": 0.008836597074694355,
+        "causal_epsilon": 2.8499883436971563
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.6163203387786996,
+          "fit": 0.14394999479769716,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.073967695236206,
+            "q0": 1.0091075897216797,
+            "p0": -0.0572049617767334
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 58.74216294600046
+    },
+    {
+      "number": 10,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0013816356822574799,
+        "lambda_reg": 1.5595796772974044e-06,
+        "lambda_physics": 0.9228295957427439,
+        "lambda_initial": 0.0020236454843648895,
+        "causal_epsilon": 0.6847105576684044
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.8806627117031389,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.34526050090789795,
+            "q0": 0.23881292343139648,
+            "p0": -0.3414781093597412
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 15.02869643899976
+    },
+    {
+      "number": 11,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00021019338091154426,
+        "lambda_reg": 1.8430691395340168e-05,
+        "lambda_physics": 0.0057527408141166865,
+        "lambda_initial": 0.02505718725747767,
+        "causal_epsilon": 0.9499535455183794
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.4394308212806525,
+          "fit": 0.1440887228735802,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0501251220703125,
+            "q0": 1.0102019309997559,
+            "p0": -0.19794917106628418
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 58.96593265000047
+    },
+    {
+      "number": 12,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00020794053992139315,
+        "lambda_reg": 3.5634913244931465e-08,
+        "lambda_physics": 0.09310837957239837,
+        "lambda_initial": 0.0025974599147866053,
+        "causal_epsilon": 0.6114056485865794
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9755626247554184,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.06560513377189636,
+            "q0": -0.014645814895629883,
+            "p0": 0.04933762550354004
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 14.665407463002339
+    },
+    {
+      "number": 13,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0005463240777949559,
+        "lambda_reg": 0.000127340382263472,
+        "lambda_physics": 0.001955707167338674,
+        "lambda_initial": 0.32646356775235214,
+        "causal_epsilon": 0.24232243900608932
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.5745773270392867,
+          "fit": 0.14401990232208756,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 1.8676985502243042,
+            "q0": 1.070502758026123,
+            "p0": -0.6758568286895752
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 58.05949404800049
+    },
+    {
+      "number": 14,
+      "state": "COMPLETE",
+      "value": 0.0003455719300696475,
+      "params": {
+        "learning_rate": 0.008972612866432512,
+        "lambda_reg": 2.2042254286251653e-06,
+        "lambda_physics": 0.8516933662231992,
+        "lambda_initial": 0.06524339610666338,
+        "causal_epsilon": 90.58458887563643
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 9.230276091186914e-05,
+          "fit": 0.14353617410413969,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.10050630569458,
+            "q0": 1.0067577362060547,
+            "p0": 0.014506340026855469
+          }
+        },
+        {
+          "seed": 1,
+          "score": 7.272165261712494e-05,
+          "fit": 0.13977620741932176,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.099254846572876,
+            "q0": 1.0099821090698242,
+            "p0": -0.015145301818847656
+          }
+        },
+        {
+          "seed": 2,
+          "score": 0.0005513055358955031,
+          "fit": 0.13137112266849263,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0972278118133545,
+            "q0": 1.0035109519958496,
+            "p0": -0.04848837852478027
+          }
+        },
+        {
+          "seed": 3,
+          "score": 0.0008396096262565011,
+          "fit": 0.13049073549872767,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.097727060317993,
+            "q0": 0.9898262023925781,
+            "p0": -0.021421432495117188
+          }
+        },
+        {
+          "seed": 4,
+          "score": 0.0001719200746672392,
+          "fit": 0.1445320915691711,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0993502140045166,
+            "q0": 1.0010786056518555,
+            "p0": -0.029497861862182617
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.000301710813414505,
+      "abandoned": false,
+      "train_time": 273.39285708900206
+    },
+    {
+      "number": 15,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00011977759384712295,
+        "lambda_reg": 2.594387318893873e-07,
+        "lambda_physics": 0.002293980298131187,
+        "lambda_initial": 0.007734292502064646,
+        "causal_epsilon": 0.29847700334512156
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9756846690612427,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.05933111160993576,
+            "q0": -0.029474258422851562,
+            "p0": 0.05841565132141113
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 14.46508623799673
+    },
+    {
+      "number": 16,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00043248032905287713,
+        "lambda_reg": 1.178460343388735e-06,
+        "lambda_physics": 0.0015575517641504763,
+        "lambda_initial": 0.11951333297092355,
+        "causal_epsilon": 18.467402585753668
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.14445834421570153,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.096104621887207,
+            "q0": 0.9966130256652832,
+            "p0": -0.08334946632385254
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 59.53340034699795
+    },
+    {
+      "number": 17,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0003394524768362832,
+        "lambda_reg": 4.132760779522891e-06,
+        "lambda_physics": 0.0019134694478070977,
+        "lambda_initial": 0.05343668232660404,
+        "causal_epsilon": 521.4165242447222
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.5872201150291593,
+          "fit": 0.1443177960921757,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.045720100402832,
+            "q0": 1.0059490203857422,
+            "p0": -0.22162818908691406
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 57.938999863999925
+    },
+    {
+      "number": 18,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.000433648556324277,
+        "lambda_reg": 2.172960840313275e-05,
+        "lambda_physics": 0.0024853845095261988,
+        "lambda_initial": 0.14092291316435565,
+        "causal_epsilon": 1.437554676473176
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.46367299725183153,
+          "fit": 0.14414377931477432,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0681378841400146,
+            "q0": 1.0153918266296387,
+            "p0": -0.1971895694732666
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 57.02479228000084
+    },
+    {
+      "number": 19,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00023247846210614455,
+        "lambda_reg": 8.561792022971869e-06,
+        "lambda_physics": 0.00114900690488732,
+        "lambda_initial": 0.3067750867937877,
+        "causal_epsilon": 0.10441957103804472
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.4917857267837498,
+          "fit": 0.14412142053505153,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0493111610412598,
+            "q0": 1.021376132965088,
+            "p0": -0.21009397506713867
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 57.109426166996855
+    },
+    {
+      "number": 20,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.002267947900021111,
+        "lambda_reg": 2.2389266508862154e-07,
+        "lambda_physics": 0.160539559268543,
+        "lambda_initial": 0.770132826493912,
+        "causal_epsilon": 0.9885817165390821
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.25594366244959343,
+          "fit": 0.14438680623196445,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.092050313949585,
+            "q0": 1.0067172050476074,
+            "p0": -0.028822660446166992
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 57.72563341899877
+    },
+    {
+      "number": 21,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0014200860749035516,
+        "lambda_reg": 9.124512203432777e-06,
+        "lambda_physics": 0.052090163113703826,
+        "lambda_initial": 0.004669226029558979,
+        "causal_epsilon": 647.1367240175239
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.14420028926623868,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.102052688598633,
+            "q0": 1.000962734222412,
+            "p0": 0.007895708084106445
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 57.932062233998295
+    },
+    {
+      "number": 22,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0007838821177219168,
+        "lambda_reg": 0.00017062527421800127,
+        "lambda_physics": 0.12544051430643316,
+        "lambda_initial": 0.0078038848502779085,
+        "causal_epsilon": 179.96633766661836
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9912941054420334,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.050332628190517426,
+            "q0": -0.07524681091308594,
+            "p0": 0.015364408493041992
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 14.530105437999737
+    },
+    {
+      "number": 23,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0006208854487201757,
+        "lambda_reg": 0.0002543993430977455,
+        "lambda_physics": 0.05543941231681779,
+        "lambda_initial": 0.4417800353023779,
+        "causal_epsilon": 58.901500750508625
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.1437301861271722,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0835068225860596,
+            "q0": 0.9822726249694824,
+            "p0": -0.08637571334838867
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 57.607684785001766
+    },
+    {
+      "number": 24,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0028216851959766125,
+        "lambda_reg": 3.210863990696917e-06,
+        "lambda_physics": 0.7383306613811965,
+        "lambda_initial": 0.08550088256963294,
+        "causal_epsilon": 4.959297871778073
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.016431369800995257,
+          "fit": 0.1433537269671707,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0879125595092773,
+            "q0": 1.0122060775756836,
+            "p0": -0.04757523536682129
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 58.34893299699979
+    },
+    {
+      "number": 25,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0016322490640824157,
+        "lambda_reg": 1.2472858387603322e-08,
+        "lambda_physics": 0.008030164648270104,
+        "lambda_initial": 0.0956138074153559,
+        "causal_epsilon": 1.4464733242813648
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.4141231909369604,
+          "fit": 0.14423159661353846,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.081721782684326,
+            "q0": 0.9983782768249512,
+            "p0": -0.05373954772949219
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 57.2114147229986
+    },
+    {
+      "number": 26,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00172199092354535,
+        "lambda_reg": 1.3926548781363209e-06,
+        "lambda_physics": 0.0025493073180721166,
+        "lambda_initial": 0.007849590083353898,
+        "causal_epsilon": 19.048450023136205
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.14692785816490056,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0579581260681152,
+            "q0": 1.0419254302978516,
+            "p0": -0.2866816520690918
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 58.9824287449992
+    },
+    {
+      "number": 27,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0015196568166072376,
+        "lambda_reg": 7.44091329985169e-06,
+        "lambda_physics": 0.09111763933595836,
+        "lambda_initial": 0.09042943346173951,
+        "causal_epsilon": 5.317086697454859
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.0033740513548789707,
+          "fit": 0.14363350873536923,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0946884155273438,
+            "q0": 0.9963226318359375,
+            "p0": -0.020427942276000977
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 58.40960845299924
+    },
+    {
+      "number": 28,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.006210022757350515,
+        "lambda_reg": 6.883500530797712e-07,
+        "lambda_physics": 0.020304615777978822,
+        "lambda_initial": 0.4739909667656128,
+        "causal_epsilon": 167.79381801428772
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.5854511066375397,
+          "fit": 0.14397877430104863,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0915656089782715,
+            "q0": 1.0016202926635742,
+            "p0": -0.06522679328918457
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 57.851957199000026
+    },
+    {
+      "number": 29,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0025572734343076975,
+        "lambda_reg": 3.170548759667359e-08,
+        "lambda_physics": 0.5733869986337061,
+        "lambda_initial": 0.1389069254026063,
+        "causal_epsilon": 989.4367254602552
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.7274685781014636,
+          "fit": 0.14376445105189148,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0994176864624023,
+            "q0": 1.0108976364135742,
+            "p0": 0.009467601776123047
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 67.97330443999817
+    },
+    {
+      "number": 30,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00019901994840577003,
+        "lambda_reg": 0.00021909390036045246,
+        "lambda_physics": 0.0030724074111466446,
+        "lambda_initial": 0.07025523533015082,
+        "causal_epsilon": 0.31280949806988406
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.8510242469780384,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.1780538111925125,
+            "q0": 0.038915157318115234,
+            "p0": -0.11928057670593262
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 25.519847867999488
+    },
+    {
+      "number": 31,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.004966111413793929,
+        "lambda_reg": 0.00010879145712532267,
+        "lambda_physics": 0.050968542639990254,
+        "lambda_initial": 0.016655201514737622,
+        "causal_epsilon": 0.18908974745983054
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.41816566877836553,
+          "fit": 0.14474303000115976,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.080185651779175,
+            "q0": 0.9890685081481934,
+            "p0": -0.09933853149414062
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 72.63071687900083
+    },
+    {
+      "number": 32,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.002482318741925866,
+        "lambda_reg": 1.852308899805381e-06,
+        "lambda_physics": 0.14661108184060861,
+        "lambda_initial": 0.39732599330079954,
+        "causal_epsilon": 798.1527604500566
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.7412485973195466,
+          "fit": 0.14406201620226633,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0925607681274414,
+            "q0": 1.0071392059326172,
+            "p0": -0.024305343627929688
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 72.0088988489988
+    },
+    {
+      "number": 33,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.005147622432383667,
+        "lambda_reg": 1.1443804262565207e-08,
+        "lambda_physics": 0.012020822750412483,
+        "lambda_initial": 0.15487156510304176,
+        "causal_epsilon": 0.4858684612966395
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.34325263672546963,
+          "fit": 0.14421076717940443,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.086919069290161,
+            "q0": 1.0027146339416504,
+            "p0": -0.06268072128295898
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 68.99871747700308
+    },
+    {
+      "number": 34,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0011017250202676105,
+        "lambda_reg": 1.8693470703706054e-08,
+        "lambda_physics": 0.003980976140397894,
+        "lambda_initial": 0.0011364893841747687,
+        "causal_epsilon": 149.55151379876685
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.7554528023031191,
+          "fit": 0.1441227476531244,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0635125637054443,
+            "q0": 0.9939231872558594,
+            "p0": -0.14042401313781738
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 70.30751042500196
+    },
+    {
+      "number": 35,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0002804460814106104,
+        "lambda_reg": 5.33038285642388e-07,
+        "lambda_physics": 0.6084765986559315,
+        "lambda_initial": 0.1297905897383722,
+        "causal_epsilon": 0.1340774427590539
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.35920993652988303,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 0.11451725661754608,
+            "q0": 1.1092066764831543,
+            "p0": -1.4302799701690674
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 70.33976123499815
+    },
+    {
+      "number": 36,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00021349529720831253,
+        "lambda_reg": 1.2805366342410175e-05,
+        "lambda_physics": 0.05391204002783814,
+        "lambda_initial": 0.005172237564581169,
+        "causal_epsilon": 545.5769224966948
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9750704029818043,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.057185474783182144,
+            "q0": -0.013072967529296875,
+            "p0": 0.049547672271728516
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 24.49932863399954
+    },
+    {
+      "number": 37,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0016901759275038959,
+        "lambda_reg": 4.766109491313373e-06,
+        "lambda_physics": 0.058847759010024536,
+        "lambda_initial": 0.1550122744363175,
+        "causal_epsilon": 1.769212429904363
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.3340534018905994,
+          "fit": 0.14420547134633271,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0849626064300537,
+            "q0": 1.0071392059326172,
+            "p0": -0.058310508728027344
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 69.76386167700184
+    },
+    {
+      "number": 38,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0006258094608554401,
+        "lambda_reg": 1.1200018624937362e-07,
+        "lambda_physics": 0.0036189202913092865,
+        "lambda_initial": 0.6809530508136838,
+        "causal_epsilon": 90.82453440210989
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.14397809178318258,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.091045379638672,
+            "q0": 0.999021053314209,
+            "p0": -0.04977989196777344
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 69.8943370800007
+    },
+    {
+      "number": 39,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0009570125151880821,
+        "lambda_reg": 1.3711126568556673e-07,
+        "lambda_physics": 0.005795213566496779,
+        "lambda_initial": 0.0014930951369986462,
+        "causal_epsilon": 5.465960667547242
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.4870932013335832,
+          "fit": 0.1440131908964048,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0822081565856934,
+            "q0": 1.0074214935302734,
+            "p0": -0.08707427978515625
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 67.01527087399882
+    },
+    {
+      "number": 40,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00042033133194799456,
+        "lambda_reg": 3.031917949088191e-05,
+        "lambda_physics": 0.013591128476936899,
+        "lambda_initial": 0.0034578888773166656,
+        "causal_epsilon": 0.12552057312500425
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9750016456264103,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.06739774346351624,
+            "q0": -0.01218557357788086,
+            "p0": 0.05164003372192383
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 23.415449937998346
+    },
+    {
+      "number": 41,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00013630106929389294,
+        "lambda_reg": 2.494387189854351e-05,
+        "lambda_physics": 0.02296627356539994,
+        "lambda_initial": 0.04071342449064846,
+        "causal_epsilon": 386.0869942155794
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.14445940591015982,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.097003221511841,
+            "q0": 0.9958748817443848,
+            "p0": -0.028618335723876953
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 68.95927364999807
+    },
+    {
+      "number": 42,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.009564844079220338,
+        "lambda_reg": 1.2147444457608825e-07,
+        "lambda_physics": 0.0975516477088793,
+        "lambda_initial": 0.0061654833633561735,
+        "causal_epsilon": 0.12094947786395806
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.3100417611255094,
+          "fit": 0.1443026669461451,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0724706649780273,
+            "q0": 1.0093884468078613,
+            "p0": -0.05297422409057617
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 70.4422534309997
+    },
+    {
+      "number": 43,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.003286679134316864,
+        "lambda_reg": 3.981857870203895e-07,
+        "lambda_physics": 0.014138120619090758,
+        "lambda_initial": 0.058203800125910955,
+        "causal_epsilon": 210.95694179648893
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.14444490872511628,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0968375205993652,
+            "q0": 0.9999799728393555,
+            "p0": -0.018990039825439453
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 70.41109301700271
+    },
+    {
+      "number": 44,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0018111886467330688,
+        "lambda_reg": 0.00023080928584808192,
+        "lambda_physics": 0.006616466294247083,
+        "lambda_initial": 0.2478223675958974,
+        "causal_epsilon": 0.5527691246968043
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.49010108742061176,
+          "fit": 0.14540215267146087,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0222489833831787,
+            "q0": 1.0382394790649414,
+            "p0": -0.5810132026672363
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 69.95414519800033
+    },
+    {
+      "number": 45,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.008046060873238968,
+        "lambda_reg": 2.7380500462932145e-05,
+        "lambda_physics": 0.004431217133292759,
+        "lambda_initial": 0.6952032143696818,
+        "causal_epsilon": 83.83458659425226
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.8309989812134064,
+          "fit": 0.14422898029505196,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0855960845947266,
+            "q0": 1.011195182800293,
+            "p0": -0.08544540405273438
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 71.79387346200019
+    },
+    {
+      "number": 46,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00032202032589430884,
+        "lambda_reg": 1.1656277734601224e-07,
+        "lambda_physics": 0.03585932759723227,
+        "lambda_initial": 0.0011939555376335792,
+        "causal_epsilon": 0.6758966622072008
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9750234861981237,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.07138454169034958,
+            "q0": -0.013480424880981445,
+            "p0": 0.050104379653930664
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 25.05036476099849
+    },
+    {
+      "number": 47,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0007069210885044555,
+        "lambda_reg": 7.427623843220782e-07,
+        "lambda_physics": 0.024588173734937983,
+        "lambda_initial": 0.006805908701019696,
+        "causal_epsilon": 22.240133294747544
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.1450046112929305,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.101020336151123,
+            "q0": 0.9954020977020264,
+            "p0": 0.0020821094512939453
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 72.25791439800014
+    },
+    {
+      "number": 48,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0053420901401435095,
+        "lambda_reg": 3.8695394602869596e-08,
+        "lambda_physics": 0.03565638590821156,
+        "lambda_initial": 0.002490028506465759,
+        "causal_epsilon": 73.69511905048896
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.32176747883374984,
+          "fit": 0.14385101706790124,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0946741104125977,
+            "q0": 1.0032410621643066,
+            "p0": -0.02093029022216797
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 71.32012794500042
+    },
+    {
+      "number": 49,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0006196114086045527,
+        "lambda_reg": 6.715936161562285e-06,
+        "lambda_physics": 0.003546822939411307,
+        "lambda_initial": 0.0027198395082655546,
+        "causal_epsilon": 8.958290106647036
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9736622927888398,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.08045344054698944,
+            "q0": -0.03283095359802246,
+            "p0": 0.06000375747680664
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 24.762355122998997
+    },
+    {
+      "number": 50,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0005143106005067166,
+        "lambda_reg": 0.0005036858219677773,
+        "lambda_physics": 0.1976859305765423,
+        "lambda_initial": 0.17619389630908594,
+        "causal_epsilon": 411.9826805392091
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9754754646960808,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.050017207860946655,
+            "q0": 0.0634608268737793,
+            "p0": -0.022661924362182617
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 24.381610795000597
+    },
+    {
+      "number": 51,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00014684016738294672,
+        "lambda_reg": 5.767164638164955e-06,
+        "lambda_physics": 0.056679786653790205,
+        "lambda_initial": 0.7687924960093075,
+        "causal_epsilon": 1.474314399149627
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.2953634067893969,
+          "fit": 0.14384837547097523,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0816800594329834,
+            "q0": 1.0009465217590332,
+            "p0": -0.06414175033569336
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 68.63366355799735
+    },
+    {
+      "number": 52,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0003031499911070509,
+        "lambda_reg": 3.172997364157129e-08,
+        "lambda_physics": 0.0011201827711749108,
+        "lambda_initial": 0.6145934824126915,
+        "causal_epsilon": 47.826234216606714
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.14427113209288997,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.05440354347229,
+            "q0": 1.0095129013061523,
+            "p0": -0.19646453857421875
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 66.81402553999942
+    },
+    {
+      "number": 53,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0037179695110280955,
+        "lambda_reg": 2.562421258979667e-07,
+        "lambda_physics": 0.057442125111516765,
+        "lambda_initial": 0.0015554848958733473,
+        "causal_epsilon": 8.760126623561966
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.2708924256422521,
+          "fit": 0.14387786277063225,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.1047005653381348,
+            "q0": 0.9956939220428467,
+            "p0": 0.008252620697021484
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 67.41504663900196
+    },
+    {
+      "number": 54,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.009015509585925322,
+        "lambda_reg": 0.00024128272362688137,
+        "lambda_physics": 0.010338960009667775,
+        "lambda_initial": 0.7668500736551157,
+        "causal_epsilon": 0.8449023263251545
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.4961675006912937,
+          "fit": 0.1447285201768965,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0330708026885986,
+            "q0": 1.0163965225219727,
+            "p0": -0.4013502597808838
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 67.56728446899797
+    },
+    {
+      "number": 55,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.007918403799063068,
+        "lambda_reg": 0.000509200150722881,
+        "lambda_physics": 0.24980881661381976,
+        "lambda_initial": 0.07786527300043782,
+        "causal_epsilon": 314.1607076383161
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.6507331865818169,
+          "fit": 0.1443002654943942,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0946731567382812,
+            "q0": 0.983370304107666,
+            "p0": -0.04451441764831543
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 67.06133427600071
+    },
+    {
+      "number": 56,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00038551436827286223,
+        "lambda_reg": 0.0001756781609870285,
+        "lambda_physics": 0.07138879900463319,
+        "lambda_initial": 0.0010957477139878027,
+        "causal_epsilon": 2.4486914889045033
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9913262596170559,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.05117638781666756,
+            "q0": -0.0752716064453125,
+            "p0": 0.015455961227416992
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 23.201961483999185
+    },
+    {
+      "number": 57,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.00019782524938981262,
+        "lambda_reg": 0.0008112355033259564,
+        "lambda_physics": 0.027233967892805085,
+        "lambda_initial": 0.031058043686105548,
+        "causal_epsilon": 36.13183893382927
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.9921581225035645,
+          "collapsed": true,
+          "stopped_at": 1000,
+          "physics": {
+            "omega": 0.055494435131549835,
+            "q0": -0.059755802154541016,
+            "p0": 0.013049125671386719
+          }
+        }
+      ],
+      "n_collapsed": 1,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 23.29681397999957
+    },
+    {
+      "number": 58,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.000545970543769982,
+        "lambda_reg": 4.83616777002683e-08,
+        "lambda_physics": 0.29265314766672273,
+        "lambda_initial": 0.0037114510384916332,
+        "causal_epsilon": 11.098797564316284
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 0.33403532357507676,
+          "fit": 0.14504074682217152,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0859127044677734,
+            "q0": 1.0112156867980957,
+            "p0": -0.05890798568725586
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 67.33758373800083
+    },
+    {
+      "number": 59,
+      "state": "PRUNED",
+      "value": null,
+      "params": {
+        "learning_rate": 0.0002809532484957892,
+        "lambda_reg": 3.084767399093259e-08,
+        "lambda_physics": 0.3859886658547967,
+        "lambda_initial": 0.8293893742197953,
+        "causal_epsilon": 697.1699062287954
+      },
+      "seeds": [
+        {
+          "seed": 0,
+          "score": 1.0,
+          "fit": 0.14326469630331135,
+          "collapsed": false,
+          "stopped_at": 5000,
+          "physics": {
+            "omega": 2.0953805446624756,
+            "q0": 1.010195255279541,
+            "p0": -0.020121097564697266
+          }
+        }
+      ],
+      "n_collapsed": 0,
+      "score_std": 0.0,
+      "abandoned": true,
+      "train_time": 67.24761293100164
+    }
+  ]
+}

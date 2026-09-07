@@ -1,4 +1,4 @@
-# Charged Particle in a Magnetic Bottle
+# Charged Particle in a Magnetic Trap
 
 <!-- BEGIN:animation -->
 <!-- END:animation -->

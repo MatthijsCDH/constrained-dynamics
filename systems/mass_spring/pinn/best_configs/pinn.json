@@ -1,0 +1,7 @@
+{
+  "learning_rate": 0.008972612866432512,
+  "lambda_reg": 2.2042254286251653e-06,
+  "lambda_physics": 0.8516933662231992,
+  "lambda_initial": 0.06524339610666338,
+  "causal_epsilon": 90.58458887563643
+}
