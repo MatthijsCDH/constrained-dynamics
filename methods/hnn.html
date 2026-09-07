@@ -1264,7 +1264,7 @@
 \]</div>
 <p>where <span class="arithmatex">\(J^{T} = -J\)</span>. Moreover, because time does not explicitly enter the training, each phase-space sample is independent, eliminating the need for trajectory-based training and reducing computational cost. Time evolution only enters after training, by numerically integrating the learned dynamics. </p>
 <p align="center">
-  <img src="../images/HNN.svg" width="520" alt="HNN architecture: canonical (q,p) in, scalar Hamiltonian out, dynamics via symplectic gradient">
+  <img src="../images/HNN.svg" width="680" alt="HNN architecture: canonical (q,p) in, scalar Hamiltonian out, dynamics via symplectic gradient">
 </p>
 
 <p>Canonical <span class="arithmatex">\((q_i, p_i)\)</span> in, scalar <span class="arithmatex">\(\mathcal{H}\)</span> out. Hamilton's equations, <span class="arithmatex">\(\dot q_i = \partial \mathcal{H}/\partial p_i\)</span> and <span class="arithmatex">\(\dot p_i = -\partial \mathcal{H}/\partial q_i\)</span>, are read off the network's own output by autodiff, not learned separately.</p>

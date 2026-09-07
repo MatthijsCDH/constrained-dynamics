@@ -1209,7 +1209,7 @@ E = \dot q \cdot \frac{\partial L}{\partial \dot q} - L
 <p>which is constant along the Euler-Lagrange flow for any <span class="arithmatex">\(L(q, \dot q)\)</span> the network represents. Moreover, because time does not explicitly enter the training, each sample in <span class="arithmatex">\((q, \dot q)\)</span> space is independent, eliminating the need for trajectory-based training and reducing computational cost. Time evolution only enters after training, by numerically integrating the learned dynamics.</p>
 <p>The difference with an HNN lies in the coordinates and in how the dynamics are recovered. An HNN requires the canonical momentum <span class="arithmatex">\(p\)</span>, which is system-specific and has to be derived before training can start, whereas an LNN takes <span class="arithmatex">\((q, \dot q)\)</span> directly. In return, Hamilton's equations are first order and yield the dynamics from a single gradient, while the Euler-Lagrange equation is second order and coupled, so the accelerations follow from a linear solve instead.</p>
 <p align="center">
-  <img src="../images/LNN.svg" width="520" alt="LNN architecture: generalized coordinates and velocities in, scalar Lagrangian out, accelerations via the Euler-Lagrange solve">
+  <img src="../images/LNN.svg" width="680" alt="LNN architecture: generalized coordinates and velocities in, scalar Lagrangian out, accelerations via the Euler-Lagrange solve">
 </p>
 
 <p><span class="arithmatex">\((q_i, \dot q_i)\)</span> in, scalar <span class="arithmatex">\(\mathcal{L}\)</span> out. The accelerations follow from the Euler-Lagrange equation, which requires second derivatives of the network output rather than the single gradient an HNN needs.</p>
