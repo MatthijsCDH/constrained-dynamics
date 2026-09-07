@@ -29,9 +29,9 @@ _No animation found for mass_spring / pinn. Run `train.py mass_spring pinn` to g
 
 The methods do not all learn from the same type of data. 
 
-**Field data** consists of independently sampled states within a phase space, with each state labeled by its true time derivative. Thus, the data takes the form $\bigl((q_i, p_i),\, (\dot q_i, \dot p_i)\bigr)$ and time never enters training. 
+**Field data** consists of independently sampled states within a phase space, with each state labeled by its true time derivative. Thus, the data takes the form $\bigl((q_i, p_i), (\dot q_i, \dot p_i)\bigr)$ and time never enters training. 
 
-**Trajectory data** consists of a single solution sampled sequentially in time, giving pairs $(t_i,\, q_i)$ over a finite interval $t \in [0, T]$.
+**Trajectory data** consists of a single solution sampled sequentially in time, giving pairs $(t_i, q_i)$ over a finite interval $t \in [0, T]$.
 
 
 | Data | Methods | Network maps |
@@ -60,23 +60,23 @@ Every method minimizes a vector of loss terms rather than a single scalar, and t
 
 Each loss function is assigned a weight $\lambda_{i}$, which determines its relative contribution to the total loss during minimization. These weights can either be specified manually or learned automatically using `TrainingConfig.use_auto_lambda`. When enabled during training, Kendall uncertainty weighting is used, where each term carries a raw parameter $s_{i}$
 
-$$
+```math
 \lambda_i = \tfrac{1}{2}e^{-2 s_i}
-$$
+```
 
 The total loss is then given by,
 
-$$
+```math
 \mathcal{L}_{\text{total}} = \frac{1}{\sum_j \lambda_j}\left( \sum_i \lambda_i \mathcal{L}_i \;+\; \sum_i s_i \right)
-$$
+```
 
 The division by $\sum_j \lambda_j$ is applied under `stop_gradient`, so it rescales the gradient without changing its direction. The inclusion of the $\sum_i s_i$ term prevents the weights $\lambda_{i}$ from collapsing to zero and effectively switching off their corresponding loss functions. Therefore, the stationary point becomes,
 
-$$
+```math
 \frac{\partial}{\partial s_i}\Bigl(\lambda_i \mathcal{L}_i + s_i\Bigr) = -2\lambda_i \mathcal{L}_i + 1 = 0
 \quad\Longrightarrow\quad
 \lambda_i = \frac{1}{2\mathcal{L}_i}
-$$
+```
 
 Thus, a term's weight ends up inversely proportional to its own loss. That is the intended behavior for multi-task learning, where a high-loss task is genuinely noisier. A physics residual ideally reaches zero, so decreasing the weight for a large physics residual may cause the optimizer to down-weight the physics term.
 

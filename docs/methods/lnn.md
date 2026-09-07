@@ -4,9 +4,9 @@ An LNN is trained on field data $x_i = (q_i, \dot q_i)$, where $q_i$ and $\dot q
 
 Conservation of energy is an inherent property of the architecture, due to Noether's theorem. For a Lagrangian with no explicit time dependence, the conserved quantity is
 
-$$
+```math
 E = \dot q \cdot \frac{\partial L}{\partial \dot q} - L
-$$
+```
 
 which is constant along the Euler-Lagrange flow for any $L(q, \dot q)$ the network represents. Moreover, because time does not explicitly enter the training, each sample in $(q, \dot q)$ space is independent, eliminating the need for trajectory-based training and reducing computational cost. Time evolution only enters after training, by numerically integrating the learned dynamics.
 
@@ -22,31 +22,30 @@ $(q_i, \dot q_i)$ in, scalar $\mathcal{L}$ out. The accelerations follow from th
 
 At each state, the network does not predict the time derivatives, but instead recovers them from the Euler-Lagrange equation,
 
-$$
+```math
 \frac{d}{dt}\left(\frac{\partial L}{\partial \dot q}\right) = \frac{\partial L}{\partial q}
-$$
+```
 
 Expanding the total time derivative with the chain rule turns this into a linear system for the accelerations,
 
-$$
-\underbrace{\frac{\partial^2 L_\theta}{\partial \dot q\, \partial \dot q^{\mathsf{T}}}}_{\text{Hessian}} \ddot q
-\;=\;
+```math
+\underbrace{\frac{\partial^2 L_\theta}{\partial \dot q\, \partial \dot q^{\mathsf{T}}}}_{\text{Hessian}} \ddot q =
 \frac{\partial L_\theta}{\partial q} - \underbrace{\frac{\partial^2 L_\theta}{\partial \dot q\, \partial q^{\mathsf{T}}}}_{\text{cross term}} \dot q
-$$
+```
 
 so a single evaluation needs three autodiff calls on the scalar output: a `jax.grad` for $\partial L_\theta/\partial q$, a `jax.hessian` for the Hessian, and a `jax.jacfwd` of `jax.grad` for the cross term. Nothing constrains the learned Hessian to be invertible, and early in training it frequently is not, so the system is solved with `jnp.linalg.pinv` rather than a direct inverse. The predicted dynamics are then
 
-$$
+```math
 f_\theta(q, \dot q) = \begin{pmatrix} \dot q \\[2pt] \ddot q \end{pmatrix},
 \qquad
 \ddot q = \left(\frac{\partial^2 L_\theta}{\partial \dot q\, \partial \dot q^{\mathsf{T}}}\right)^{+}\left(\frac{\partial L_\theta}{\partial q} - \frac{\partial^2 L_\theta}{\partial \dot q\, \partial q^{\mathsf{T}}}\dot q\right)
-$$
+```
 
 which are compared directly with the labeled derivatives using the mean square error,
 
-$$
+```math
 \mathcal{L}_{\text{eom}} = \frac{1}{N} \sum_{i=1}^{N} \bigl\lVert f_\theta(q_i, \dot q_i) - \dot x_i \bigr\rVert^2 .
-$$
+```
 
 This term is weighted by `LNNLossConfig.lambda_eom`. Together with an L2 regularization term $\mathcal{L}_{\text{reg}}$, this makes up the loss vector for an LNN. These loss functions are balanced by the Kendall uncertainty weighting, described in [Loss weighting](../index.md#loss-weighting). 
 
@@ -59,9 +58,9 @@ The Lagrangian $L$ can be split into a known functional form plus a network corr
 
 However, this procedure provides no mechanism to prevent $L_{\text{net}}(q,\dot q)$ from absorbing the entire Lagrangian, rendering $L_{\text{known}}(q,\dot q;\theta)$ irrelevant. Consequently, the learnable parameter $\theta$ no longer has a unique solution, as many different $\theta$ can be paired with a compensating $L_{\text{net}}$ to reach the same minimal loss, leaving the loss landscape flat along $\theta$. Setting `LagrangianConfig.penalize_correction` adds a term to the loss to break the degeneracy,
 
-$$
+```math
 \mathcal{L}_{\text{correction}} = \frac{1}{N} \sum_{i=1}^{N} L_{\text{net}}(q_i, \dot q_i)^2
-$$
+```
 
 This is a pure L2 penalty on the correction network's own output, weighted by `LNNLossConfig.lambda_correction`. Increasing $L_{\text{net}}$ to absorb more of the Lagrangian now has a penalty, which pushes the optimizer toward solutions where $L_{\text{known}}(q,\dot q;\theta)$ carries more of the dynamics and $L_{\text{net}}$ is used only to capture the remaining residual.
 
@@ -73,29 +72,29 @@ A standard LNN trained on damped data cannot represent systems with decaying ene
 
 To account for dissipation, the term $D(q, \dot q)$ is added to the Euler-Lagrange equation. The resulting equations of motion are,
 
-$$
+```math
 \frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_i}\right) = \frac{\partial L}{\partial q_i} - \frac{\partial D}{\partial \dot q_i}
-$$
+```
 
 which enters the solve as one more term on the right-hand side,
 
-$$
+```math
 \ddot q = \left(\frac{\partial^2 L}{\partial \dot q\, \partial \dot q^{\mathsf{T}}}\right)^{+}\left(\frac{\partial L}{\partial q} - \frac{\partial^2 L}{\partial \dot q\, \partial q^{\mathsf{T}}}\dot q - \frac{\partial D}{\partial \dot q}\right)
-$$
+```
 
 With this additional term, the rate of change of the energy becomes,
 
-$$
+```math
 \dot E = -\sum_i \dot q_i \frac{\partial D}{\partial \dot q_i} \le 0
-$$
+```
 
 The inequality is not an automatic guarantee, but must be enforced to ensure that the dissipative term only removes energy from the system. An example of a commonly used dissipation function is the quadratic form,
 
-$$
+```math
 D(q, \dot q) = \tfrac{1}{2}\gamma\,\dot q^{2}
 \quad\Longrightarrow\quad
 \dot E = -\gamma\,\dot q^{2} \le 0
-$$
+```
 
 This form describes velocity-dependent damping, such as friction or air resistance. To satisfy the inequality the damping factor must be non-negative, $\gamma \ge 0$, which is enforced by bounding its learnable domain. Rayleigh is the dissipative counterpart of the hybrid known-term above and is supplied per system through `LagrangianConfig.dissipation_term`, and only its constants are learnable, given by `LearnableParam` entries in `LNNLossConfig.physics`. That makes $\gamma$ come out of training as a physically meaningful number, at the cost of having to know the damping structure in advance.
 
@@ -105,21 +104,21 @@ This form describes velocity-dependent damping, such as friction or air resistan
 
 When the damping structure is not known, the whole dissipation operator can be learned instead. The dissipation is written as a quadratic form in the velocities,
 
-$$
+```math
 D(q, \dot q) = \tfrac{1}{2}\sum_{i,j=1}^{n} \dot q_i\,R_{ij}(q)\,\dot q_j
-$$
+```
 
 where $R$ is the correction matrix that contains the dissipation of the system. In contrast to Rayleigh, the correction matrix $R$ can couple different degrees of freedom nonlinearly. The rate of change of the energy becomes,
 
-$$
+```math
 \dot E = -\sum_{i,j=1}^{n} R_{ij}\,\dot q_i\,\dot q_j \le 0
-$$
+```
 
 where the inequality must be enforced rather than automatically guaranteed. To ensure this condition, the matrix $R$ must be symmetric positive semidefinite. However, since $R$ is learned by the network, it is not guaranteed that $R$ is positive semidefinite. To enforce positive semidefiniteness, the network instead learns a lower triangular matrix $L$, from which $R$ is constructed,
 
-$$
+```math
 R = L L^{\mathsf{T}}, \qquad L \ \text{lower triangular}
-$$
+```
 
 This guarantees that $v^{\mathsf{T}} L L^{\mathsf{T}} v = \lVert L^{\mathsf{T}} v \rVert^2 \ge 0, \quad \forall v \in \mathbb{R}^n$. The matrix $L$ is read off a second slice of the same network's output, evaluated at the same input with the velocity slot forced to zero so that $R$ depends on $q$ alone, where index $0$ is the Lagrangian and the next $k(k+1)/2$ entries are the lower-triangular entries of $L$, where $k = n_{\text{dof}}$ and $n_{\text{dof}}$ is `LagrangianConfig.n_dof`. 
 

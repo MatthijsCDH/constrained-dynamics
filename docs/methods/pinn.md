@@ -14,43 +14,43 @@ The PINN's loss vector consists of four active loss functions each performing a 
 
 **Data.** This loss term consists of an ordinary mean square error, where the learned trajectory is fit against the observations, on the normalized input $\hat t = t / t_{\max}$,
 
-$$
+```math
 \mathcal{L}_{\text{data}} = \frac{1}{N}\sum_{i=1}^{N}\bigl(u_\theta(t_i) - u_i\bigr)^2
-$$
+```
 
 **Physics.** The physics loss term is a measure of how well the fitted data follows the governing differential equation $\mathcal{N}[u] = 0$. The residual is that operator applied to the network's own output,
 
-$$
+```math
 r(t) = \mathcal{N}\bigl[u_\theta\bigr](t)
-$$
+```
 
-with every derivative it contains supplied by autodiff. It is evaluated at a fixed set of collocation points $\{\tau_j\}$, drawn once at construction over $[\,$`collocation.x_min`$,\,$`collocation.x_max`$\,]$ and independent of the data. 
+with every derivative it contains supplied by autodiff. It is evaluated at a fixed set of collocation points $\{\tau_j\}$, drawn once at construction over the interval from `collocation.x_min` to `collocation.x_max`, and independent of the data. 
 
-$$
+```math
 \mathcal{L}_{\text{physics}} = \frac{1}{M}\sum_{j=1}^{M} r(\tau_j)^2
-$$
+```
 
 Collocation points allow the network to enforce the governing equations beyond the temporal domain covered by the data, enabling extrapolation to later times. Since these points do not require additional labeled data, extending the temporal domain does not add to the data cost, although the quality of the extrapolation still depends on the accuracy of the learned dynamics and the governing equations. Each system supplies its own $\mathcal{N}$ through `PINNLossConfig.residual_fn`. 
 
 **Initial.** In general, the data and physics loss functions do not uniquely determine the solution of a dynamical system. To enforce the correct initial value, 
 
-$$
+```math
 \mathcal{L}_{\text{initial}} = \bigl\lVert \mathcal{I}\bigl[u_\theta\bigr] - u_{0} \bigr\rVert^2
-$$
+```
 
 where $\mathcal{I}$ evaluates the network at $t=0$ and compares it with the prescribed initial state $u_0$. For more complicated initial values, the loss can include initial derivatives. 
 
 **Boundary.** For problems with spatial boundaries, the solution must also satisfy the conditions of the spatial domain. These conditions are enforced by the boundary loss
 
-$$
+```math
 \mathcal{L}_{\text{boundary}} = \bigl\lVert \mathcal{B}\bigl[u_\theta\bigr] - b \bigr\rVert^2
-$$
+```
 
 where $\mathcal{B}$ represents the boundary operator and $b$ denotes the prescribed boundary values. The operator $\mathcal{B}$ can take different forms depending on the problem, such as a Dirichlet condition specifying the solution itself or a Neumann condition specifying its normal derivative.
 
-$$
+```math
 \bigl(\mathcal{L}_{\text{data}},\ \mathcal{L}_{\text{physics}},\ \mathcal{L}_{\text{initial}},\ \mathcal{L}_{\text{boundary}},\ \mathcal{L}_{\text{reg}}\bigr)
-$$
+```
 
 balanced by Kendall uncertainty weighting, described in [Loss weighting](../index.md#loss-weighting).
 
@@ -65,13 +65,13 @@ The constants appearing in $\mathcal{N}$ do not have to be known by the loss fun
 
 However, as the number of learnable parameters appearing in the physics residual increases, so does the space of parameter configurations that can satisfy the governing equations within the data domain, potentially leading to a non-unique solution. To constrain the learnable parameters to physically plausible ranges, each unconstrained parameter $\tilde{\theta}$ is mapped to a bounded interval using a sigmoid function,
 
-$$
+```math
 \theta = \theta_{\min} + (\theta_{\max} - \theta_{\min})\,\sigma(\tilde\theta)
-$$
+```
 
 with the limits taken from `PINNLossConfig.bounds`, so a parameter cannot leave its range no matter what gradient it receives. Declaring a parameter with `learnable=False` keeps it in the same place but freezes it, which is equivalent to hardcoding the constant.
 
-This is where a PINN earns its keep relative to a black-box model: the recovered constants are physically meaningful numbers, reported after training by `describe_physics` and checked against the truth in the results tables.
+This highlights a key advantage of PINNs over conventional black-box models. The recovered constants are physically meaningful numbers, reported after training by `describe_physics` and checked against the truth in the results tables.
 
 If a boundary or initial condition's target is itself learnable, the losses $\mathcal{L}_{\text{boundary}}$ and $\mathcal{L}_{\text{initial}}$ have free parameters on both sides, so the corresponding loss no longer uniquely sets the solution. Recovering the true conditions then requires the data loss to act as an additional source of information. 
 
@@ -80,11 +80,11 @@ If a boundary or initial condition's target is itself learnable, the losses $\ma
 
 A PINN during training has no incentive to optimize in a causal order, which can be problematic as errors at early times can propagate forward. Therefore, the network's prediction near the initial conditions must be weighted higher. This encourages the PINN to first establish a physically consistent solution at early times before using that solution as a basis for learning at later times. Causal weighting enforces the ordering by down-weighting a point according to how much residual is still unresolved before it,
 
-$$
-w_j = \exp\!\left(-\varepsilon \sum_{k<j} \bar r_k \right),
+```math
+w_j = \exp\left(-\varepsilon \sum_{k \lt j} \bar r_k \right),
 \qquad
 \bar r_k = \frac{1}{|B_k|}\sum_{\tau \in B_k} r(\tau)^2
-$$
+```
 
 The collocation points are sorted in time and grouped into `CollocationConfig.bins` equal-count bins $B_k$, so the sum runs over bin means rather than over individual points. This keeps $\varepsilon$ independent of how many collocation points a system happens to use, and averages within a bin instead of accumulating a noisy per-point random walk.
 

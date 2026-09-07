@@ -10,9 +10,9 @@ This is a standard feedforward network with no physics inductive bias, which ser
 ## Loss function
 The loss function is a single term, `loss_names = ("data",)`, weighted by `MLPLossConfig.lambda_data`:
 
-$$
+```math
 \mathcal{L}_{\text{data}} = \frac{1}{N} \sum_{i=1}^{N} \left( \hat{y}_i - y_i \right)^2
-$$
+```
 
 where $N$ is the batch size and $\hat{y}$ is the network's output. This is the baseline loss function for all methods.
 

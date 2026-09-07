@@ -11,23 +11,23 @@
 
 A charged particle moving in a plane, in a magnetic field along $z$ and a harmonic trap. The field is deliberately non-uniform,
 
-$$
+```math
 B(r) = B_0\bigl(1 + \alpha\lVert r\rVert^2\bigr),
 \qquad
 A(r) = B_0\Bigl(\tfrac{1}{2} + \tfrac{1}{4}\alpha\lVert r\rVert^2\Bigr)(-y,\ x)
-$$
+```
 
-with $A$ chosen so that $\nabla \times A = B(r)\,\hat z$. A uniform field would give pure circular motion, which every method fits trivially; the $\alpha$ term makes the gyrofrequency depend on position and the orbits genuinely non-sinusoidal.
+with $A$ chosen so that $\nabla \times A = B(r) \hat z$. A uniform field would give pure circular motion, which every method fits trivially; the $\alpha$ term makes the gyrofrequency depend on position and the orbits genuinely non-sinusoidal.
 
 The Lagrangian, canonical momentum and Hamiltonian are
 
-$$
+```math
 L = \tfrac{1}{2}m\lVert v\rVert^2 + e\,v\cdot A(r) - \tfrac{1}{2}k\lVert r\rVert^2,
 \qquad
 p = m v + e A(r),
 \qquad
 H = \frac{\lVert p - eA(r)\rVert^2}{2m} + \tfrac{1}{2}k\lVert r\rVert^2 .
-$$
+```
 
 $H$ is conserved. The magnetic force does no work, so all of the energy is kinetic plus trap potential.
 

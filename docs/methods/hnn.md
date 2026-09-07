@@ -4,9 +4,9 @@ An HNN is trained on field data $x_{i} = (q_{i}, p_{i})$, where $q_{i}$ and $p_{
 
 Conservation of energy is an inherent property of the architecture, due to the antisymmetric structure of the symplectic gradient, 
 
-$$
+```math
 \dot H = \nabla H^\mathsf{T}J\nabla H = 0
-$$
+```
 
 where $J^{T} = -J$. Moreover, because time does not explicitly enter the training, each phase-space sample is independent, eliminating the need for trajectory-based training and reducing computational cost. Time evolution only enters after training, by numerically integrating the learned dynamics. 
 
@@ -21,15 +21,15 @@ Canonical $(q_i, p_i)$ in, scalar $\mathcal{H}$ out. Hamilton's equations, $\dot
 
 At each phase-space state, the network does not predict the time derivatives, but instead uses the symplectic gradient of the learned Hamiltonian,
 
-$$
+```math
 f_\theta(q, p) = \begin{pmatrix} \partial H_\theta / \partial p \\[2pt] -\,\partial H_\theta / \partial q \end{pmatrix}
-$$
+```
 
 obtained from a `jax.grad` call on the scalar output. The predicted dynamics are then compared directly with the labeled derivatives using the mean square error,
 
-$$
+```math
 \mathcal{L}_{\text{eom}} = \frac{1}{N} \sum_{i=1}^{N} \bigl\lVert f_\theta(q_i, p_i) - \dot x_i \bigr\rVert^2 .
-$$
+```
 
 This term is weighted by `HNNLossConfig.lambda_eom`. Together with an L2 regularization term $\mathcal{L}_{\text{reg}}$, this makes up the loss vector for a simple HNN. These loss functions are balanced by the Kendall uncertainty weighting, described in [Loss weighting](../index.md#loss-weighting). 
 
@@ -42,9 +42,9 @@ The Hamiltonian $H$ can be split into a known functional form plus a network cor
 
 However, this procedure provides no mechanism to prevent $H_{\text{net}}(q,p)$ from absorbing the entire Hamiltonian, rendering $H_{\text{known}}(q,p;\theta)$ irrelevant. Consequently, the learnable parameter $\theta$ no longer has a unique solution, as many different $\theta$ can be paired with a compensating $H_{\text{net}}$ to reach the same minimal loss, leaving the loss landscape flat along $\theta$. Setting `HamiltonianConfig.penalize_correction` adds a term to the loss to break the degeneracy,
 
-$$
+```math
 \mathcal{L}_{\text{correction}} = \frac{1}{N} \sum_{i=1}^{N} H_{\text{net}}(q_i, p_i)^2
-$$
+```
 
 This is a pure L2 penalty on the correction network's own output, weighted by `HNNLossConfig.lambda_correction`. Increasing $H_{\text{net}}$ to absorb more of the Hamiltonian now has a penalty, which pushes the optimizer toward solutions where $H_{\text{known}}(q,p;\theta)$ carries more of the dynamics and $H_{\text{net}}$ is used only to capture the remaining residual.
 
@@ -56,24 +56,24 @@ A standard HNN trained on damped data cannot represent systems with decaying ene
 
 To account for dissipation, the term $D(q, \dot q)$ is added to the momentum equation. The resulting equations of motion are,
 
-$$
+```math
 \dot q_i = \frac{\partial H}{\partial p_i}, \qquad
 \dot p_i = -\frac{\partial H}{\partial q_i} - \frac{\partial D}{\partial \dot q_i}
-$$
+```
 
 With this additional term, the rate of change of the Hamiltonian becomes,
 
-$$
+```math
 \dot H = -\sum_i \dot q_i \frac{\partial D}{\partial \dot q_i} \le 0
-$$
+```
 
 The inequality is not an automatic guarantee, but must be enforced to ensure that the dissipative term only removes energy from the system. An example of a commonly used dissipation function is the quadratic form,
 
-$$
+```math
 D(q, \dot q) = \tfrac{1}{2}\gamma\,\dot q^{2}
 \quad\Longrightarrow\quad
 \dot H = -\gamma\,\dot q^{2} \le 0
-$$
+```
 
 This form describes velocity-dependent damping, such as friction or air resistance. To satisfy the inequality the damping factor must be non-negative, $\gamma \ge 0$, which is enforced by bounding its learnable domain. Rayleigh is the dissipative counterpart of the hybrid known-term above and is supplied per system through `HamiltonianConfig.dissipation_term`, and only its constants are learnable, given by `LearnableParam` entries in `HNNLossConfig.physics`. That makes $\gamma$ come out of training as a physically meaningful number, at the cost of having to know the damping structure in advance.
 
@@ -83,21 +83,21 @@ This form describes velocity-dependent damping, such as friction or air resistan
 
 When the damping structure is not known, the whole dissipation operator can be learned instead. The dynamics are written in port-Hamiltonian form on the full state $x = (q, p)$,
 
-$$
+```math
 \dot x_i = \sum_{j=1}^{2n}\bigl(J_{ij} - R_{ij}(x)\bigr)\frac{\partial H}{\partial x_j}
-$$
+```
 
 where $R$ is the correction matrix that contains the dissipation of the system. In contrast to Rayleigh, the correction matrix $R$ can couple different components of $\nabla H$ nonlinearly. The rate of change of the Hamiltonian becomes,
 
-$$
+```math
 \dot H = -\sum_{i,j=1}^{2n} R_{ij}\,\frac{\partial H}{\partial x_i}\,\frac{\partial H}{\partial x_j} \le 0
-$$
+```
 
 where the inequality must be enforced rather than automatically guaranteed. To ensure this condition, the matrix $R$ must be symmetric positive semidefinite. However, since $R$ is learned by the network, it is not guaranteed that $R$ is positive semidefinite. To enforce positive semidefiniteness, the network instead learns a lower triangular matrix $L$, from which $R$ is constructed,
 
-$$
+```math
 R = L L^{\mathsf{T}}, \qquad L \ \text{lower triangular}
-$$
+```
 
 This guarantees that $v^{\mathsf{T}} L L^{\mathsf{T}} v = \lVert L^{\mathsf{T}} v \rVert^2 \ge 0, \quad \forall v \in \mathbb{R}^n$. The matrix $L$ is read off a second slice of the same network's output at the same input $(q,p)$ where index $0$ is $H$ and the next $k(k+1)/2$ entries are the lower-triangular entries of $L$, where $k = 2n_{\text{dof}}$ and $n_{\text{dof}}$ is `HamiltonianConfig.n_dof`. 
 
@@ -121,16 +121,16 @@ Since the output of the neural network is the Hamiltonian of a system, the traje
 
 With $f$ the learned field from `dynamics()` and step size $h$,
 
-$$
+```math
 \begin{aligned}
-k_1 &= f(x_n), &\qquad k_2 &= f\!\left(x_n + \tfrac{h}{2}k_1\right), \\
-k_3 &= f\!\left(x_n + \tfrac{h}{2}k_2\right), &\qquad k_4 &= f\!\left(x_n + h k_3\right),
+k_1 &= f(x_n), &\qquad k_2 &= f\left(x_n + \tfrac{h}{2}k_1\right), \\
+k_3 &= f\left(x_n + \tfrac{h}{2}k_2\right), &\qquad k_4 &= f\left(x_n + h k_3\right),
 \end{aligned}
-$$
+```
 
-$$
+```math
 x_{n+1} = x_n + \frac{h}{6}\left(k_1 + 2k_2 + 2k_3 + k_4\right)
-$$
+```
 
 Fourth-order accurate, with local error $\mathcal{O}(h^5)$ and global error $\mathcal{O}(h^4)$. Although the local error is low, the rollout is not symplectic. The continuous flow of the learned $H$ conserves energy exactly, but RK4's discrete approximation of that flow does not, so measured energy drifts secularly over a long rollout. Any residual energy drift reported for an HNN under RK4 is therefore a property of the integrator, not evidence that the architecture failed to conserve.
 
@@ -138,13 +138,13 @@ Fourth-order accurate, with local error $\mathcal{O}(h^5)$ and global error $\ma
 
 Starting from an initial state $(q_{n}, p_{n})$, the leapfrog integrator advances the system by alternating half-step momentum updates with full-step position updates,
 
-$$
+```math
 \begin{aligned}
 p_{n+1/2} &= p_n - \frac{h}{2}\,\frac{\partial H}{\partial q}(q_n,\, p_n) \\[2pt]
 q_{n+1} &= q_n + h\,\frac{\partial H}{\partial p}(q_n,\, p_{n+1/2}) \\[2pt]
 p_{n+1} &= p_{n+1/2} - \frac{h}{2}\,\frac{\partial H}{\partial q}(q_{n+1},\, p_{n+1/2})
 \end{aligned}
-$$
+```
 
 Only second-order accurate, so per-step it is worse than RK4, but it is symplectic. The practical consequence is that it conserves a nearby shadow Hamiltonian $\tilde H = H + \mathcal{O}(h^2)$ exactly, so its energy error stays bounded and oscillates around the true value instead of accumulating. Over long horizons that matters far more than the order of accuracy.
 

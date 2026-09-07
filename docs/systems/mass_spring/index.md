@@ -11,27 +11,27 @@
 
 A unit mass on a linear spring. The equation of motion is
 
-$$
+```math
 \ddot q = -\omega^2 q
 \qquad\Longleftrightarrow\qquad
 \dot q = p, \quad \dot p = -\omega^2 q
-$$
+```
 
 which has solution,
 
-$$
+```math
 q(t) = q_0\cos\omega t + \frac{p_0}{\omega}\sin\omega t,
 \qquad
 p(t) = -q_0\,\omega\sin\omega t + p_0\cos\omega t .
-$$
+```
 
 Ground truth is evaluated from this expression rather than integrated numerically, so it carries no solver error. The Lagrangian and Hamiltonian are
 
-$$
+```math
 L(q, \dot q) = \tfrac{1}{2}\dot q^{2} - \tfrac{1}{2}\omega^{2}q^{2},
 \qquad
 H(q, p) = \tfrac{1}{2}p^{2} + \tfrac{1}{2}\omega^{2}q^{2} .
-$$
+```
 
 With unit mass $p = \dot q$, so the canonical and generalized coordinates coincide and HNN and LNN see numerically identical inputs. That makes this the one system where the two can be compared without the canonical-momentum derivation getting in the way.
 
