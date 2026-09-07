@@ -1117,7 +1117,7 @@
 <div class="arithmatex">\[
 r(t) = \mathcal{N}\bigl[u_\theta\bigr](t)
 \]</div>
-<p>with every derivative it contains supplied by autodiff. It is evaluated at a fixed set of collocation points <span class="arithmatex">\(\{\tau_j\}\)</span>, drawn once at construction over <span class="arithmatex">\([\,\)</span><code>collocation.x_min</code><span class="arithmatex">\(,\,\)</span><code>collocation.x_max</code><span class="arithmatex">\(\,]\)</span> and independent of the data. </p>
+<p>with every derivative it contains supplied by autodiff. It is evaluated at a fixed set of collocation points <span class="arithmatex">\(\{\tau_j\}\)</span>, drawn once at construction over the interval from <code>collocation.x_min</code> to <code>collocation.x_max</code>, and independent of the data. </p>
 <div class="arithmatex">\[
 \mathcal{L}_{\text{physics}} = \frac{1}{M}\sum_{j=1}^{M} r(\tau_j)^2
 \]</div>
@@ -1145,12 +1145,12 @@ r(t) = \mathcal{N}\bigl[u_\theta\bigr](t)
 \theta = \theta_{\min} + (\theta_{\max} - \theta_{\min})\,\sigma(\tilde\theta)
 \]</div>
 <p>with the limits taken from <code>PINNLossConfig.bounds</code>, so a parameter cannot leave its range no matter what gradient it receives. Declaring a parameter with <code>learnable=False</code> keeps it in the same place but freezes it, which is equivalent to hardcoding the constant.</p>
-<p>This is where a PINN earns its keep relative to a black-box model: the recovered constants are physically meaningful numbers, reported after training by <code>describe_physics</code> and checked against the truth in the results tables.</p>
+<p>This highlights a key advantage of PINNs over conventional black-box models. The recovered constants are physically meaningful numbers, reported after training by <code>describe_physics</code> and checked against the truth in the results tables.</p>
 <p>If a boundary or initial condition's target is itself learnable, the losses <span class="arithmatex">\(\mathcal{L}_{\text{boundary}}\)</span> and <span class="arithmatex">\(\mathcal{L}_{\text{initial}}\)</span> have free parameters on both sides, so the corresponding loss no longer uniquely sets the solution. Recovering the true conditions then requires the data loss to act as an additional source of information. </p>
 <h3 id="causal-weighting">Causal weighting</h3>
 <p>A PINN during training has no incentive to optimize in a causal order, which can be problematic as errors at early times can propagate forward. Therefore, the network's prediction near the initial conditions must be weighted higher. This encourages the PINN to first establish a physically consistent solution at early times before using that solution as a basis for learning at later times. Causal weighting enforces the ordering by down-weighting a point according to how much residual is still unresolved before it,</p>
 <div class="arithmatex">\[
-w_j = \exp\!\left(-\varepsilon \sum_{k&lt;j} \bar r_k \right),
+w_j = \exp\left(-\varepsilon \sum_{k \lt j} \bar r_k \right),
 \qquad
 \bar r_k = \frac{1}{|B_k|}\sum_{\tau \in B_k} r(\tau)^2
 \]</div>

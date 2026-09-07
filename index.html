@@ -1133,8 +1133,8 @@
 <p><strong><a href="methods/lnn.html">LNN</a></strong>. Similar to an HNN, an LNN outputs a single scalar corresponding to the Lagrangian <code>L(q,q̇)</code>, taking the generalized coordinates and velocities as inputs, so no canonical momentum is required. The system dynamics are obtained from the Euler–Lagrange equations, embedding the variational structure of the system directly into the network. This formulation is particularly well suited to constrained systems, as constraints can be incorporated naturally through generalized coordinates or Lagrange multipliers. The main computational drawback is that evaluating the Euler–Lagrange equations requires higher-order derivatives of the network output, making LNNs generally more computationally expensive than HNNs.</p>
 <h3 id="field-data-and-trajectory-data">Field data and trajectory data</h3>
 <p>The methods do not all learn from the same type of data. </p>
-<p><strong>Field data</strong> consists of independently sampled states within a phase space, with each state labeled by its true time derivative. Thus, the data takes the form <span class="arithmatex">\(\bigl((q_i, p_i),\, (\dot q_i, \dot p_i)\bigr)\)</span> and time never enters training. </p>
-<p><strong>Trajectory data</strong> consists of a single solution sampled sequentially in time, giving pairs <span class="arithmatex">\((t_i,\, q_i)\)</span> over a finite interval <span class="arithmatex">\(t \in [0, T]\)</span>.</p>
+<p><strong>Field data</strong> consists of independently sampled states within a phase space, with each state labeled by its true time derivative. Thus, the data takes the form <span class="arithmatex">\(\bigl((q_i, p_i), (\dot q_i, \dot p_i)\bigr)\)</span> and time never enters training. </p>
+<p><strong>Trajectory data</strong> consists of a single solution sampled sequentially in time, giving pairs <span class="arithmatex">\((t_i, q_i)\)</span> over a finite interval <span class="arithmatex">\(t \in [0, T]\)</span>.</p>
 <table>
 <thead>
 <tr>

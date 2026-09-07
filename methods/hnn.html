@@ -1363,8 +1363,8 @@ R = L L^{\mathsf{T}}, \qquad L \ \text{lower triangular}
 <p>With <span class="arithmatex">\(f\)</span> the learned field from <code>dynamics()</code> and step size <span class="arithmatex">\(h\)</span>,</p>
 <div class="arithmatex">\[
 \begin{aligned}
-k_1 &amp;= f(x_n), &amp;\qquad k_2 &amp;= f\!\left(x_n + \tfrac{h}{2}k_1\right), \\
-k_3 &amp;= f\!\left(x_n + \tfrac{h}{2}k_2\right), &amp;\qquad k_4 &amp;= f\!\left(x_n + h k_3\right),
+k_1 &= f(x_n), &\qquad k_2 &= f\left(x_n + \tfrac{h}{2}k_1\right), \\
+k_3 &= f\left(x_n + \tfrac{h}{2}k_2\right), &\qquad k_4 &= f\left(x_n + h k_3\right),
 \end{aligned}
 \]</div>
 <div class="arithmatex">\[
@@ -1375,9 +1375,9 @@ x_{n+1} = x_n + \frac{h}{6}\left(k_1 + 2k_2 + 2k_3 + k_4\right)
 <p>Starting from an initial state <span class="arithmatex">\((q_{n}, p_{n})\)</span>, the leapfrog integrator advances the system by alternating half-step momentum updates with full-step position updates,</p>
 <div class="arithmatex">\[
 \begin{aligned}
-p_{n+1/2} &amp;= p_n - \frac{h}{2}\,\frac{\partial H}{\partial q}(q_n,\, p_n) \\[2pt]
-q_{n+1} &amp;= q_n + h\,\frac{\partial H}{\partial p}(q_n,\, p_{n+1/2}) \\[2pt]
-p_{n+1} &amp;= p_{n+1/2} - \frac{h}{2}\,\frac{\partial H}{\partial q}(q_{n+1},\, p_{n+1/2})
+p_{n+1/2} &= p_n - \frac{h}{2}\,\frac{\partial H}{\partial q}(q_n,\, p_n) \\[2pt]
+q_{n+1} &= q_n + h\,\frac{\partial H}{\partial p}(q_n,\, p_{n+1/2}) \\[2pt]
+p_{n+1} &= p_{n+1/2} - \frac{h}{2}\,\frac{\partial H}{\partial q}(q_{n+1},\, p_{n+1/2})
 \end{aligned}
 \]</div>
 <p>Only second-order accurate, so per-step it is worse than RK4, but it is symplectic. The practical consequence is that it conserves a nearby shadow Hamiltonian <span class="arithmatex">\(\tilde H = H + \mathcal{O}(h^2)\)</span> exactly, so its energy error stays bounded and oscillates around the true value instead of accumulating. Over long horizons that matters far more than the order of accuracy.</p>

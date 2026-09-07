@@ -1220,8 +1220,7 @@ E = \dot q \cdot \frac{\partial L}{\partial \dot q} - L
 \]</div>
 <p>Expanding the total time derivative with the chain rule turns this into a linear system for the accelerations,</p>
 <div class="arithmatex">\[
-\underbrace{\frac{\partial^2 L_\theta}{\partial \dot q\, \partial \dot q^{\mathsf{T}}}}_{\text{Hessian}} \ddot q
-\;=\;
+\underbrace{\frac{\partial^2 L_\theta}{\partial \dot q\, \partial \dot q^{\mathsf{T}}}}_{\text{Hessian}} \ddot q =
 \frac{\partial L_\theta}{\partial q} - \underbrace{\frac{\partial^2 L_\theta}{\partial \dot q\, \partial q^{\mathsf{T}}}}_{\text{cross term}} \dot q
 \]</div>
 <p>so a single evaluation needs three autodiff calls on the scalar output: a <code>jax.grad</code> for <span class="arithmatex">\(\partial L_\theta/\partial q\)</span>, a <code>jax.hessian</code> for the Hessian, and a <code>jax.jacfwd</code> of <code>jax.grad</code> for the cross term. Nothing constrains the learned Hessian to be invertible, and early in training it frequently is not, so the system is solved with <code>jnp.linalg.pinv</code> rather than a direct inverse. The predicted dynamics are then</p>
