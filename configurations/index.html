@@ -1,0 +1,2556 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comparing MLP, PINN, HNN and LNN">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../evaluation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Configuration - HNNs vs PINNs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuration-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="HNNs vs PINNs" class="md-header__button md-logo" aria-label="HNNs vs PINNs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HNNs vs PINNs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Configuration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MatthijsCDH/constrained-dynamics" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MatthijsCDH/constrained-dynamics
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Configuration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../evaluation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Evaluation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../methods/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Methods
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../systems/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Systems
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="HNNs vs PINNs" class="md-nav__button md-logo" aria-label="HNNs vs PINNs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    HNNs vs PINNs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MatthijsCDH/constrained-dynamics" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MatthijsCDH/constrained-dynamics
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#global" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Global">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#systemconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SystemConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data generation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#datagenerationconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DataGenerationConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#networkconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NetworkConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trainingconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TrainingConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mlplossconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLPLossConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hnnlossconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HNNLossConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hamiltonianconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HamiltonianConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lnnlossconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LNNLossConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lagrangianconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LagrangianConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pinnlossconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PINNLossConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collocationconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CollocationConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#physics-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physics parameters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Physics parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learnableparam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LearnableParam
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physicsparamsconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PhysicsParamsConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#evalspec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EvalSpec
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visualizationconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VisualizationConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#livelearningconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LiveLearningConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assembling-a-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assembling a run
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../evaluation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../methods/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methods
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Methods
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/mlp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/pinn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PINN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/hnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methods/lnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../systems/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Systems
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../systems/mass_spring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mass Spring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../systems/mass_spring_damped/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mass Spring (Damped)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../systems/double_pendulum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Double Pendulum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../systems/double_pendulum_damped/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Double Pendulum (Damped)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../systems/charged_particle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Charged Particle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#global" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Global">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#systemconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SystemConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data generation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#datagenerationconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DataGenerationConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#networkconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NetworkConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trainingconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TrainingConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mlplossconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLPLossConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hnnlossconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HNNLossConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hamiltonianconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HamiltonianConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lnnlossconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LNNLossConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lagrangianconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LagrangianConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pinnlossconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PINNLossConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collocationconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CollocationConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#physics-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physics parameters
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Physics parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learnableparam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LearnableParam
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#physicsparamsconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PhysicsParamsConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#evalspec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EvalSpec
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visualizationconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VisualizationConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#livelearningconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LiveLearningConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assembling-a-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assembling a run
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="configuration-reference">Configuration reference</h1>
+<p>Every setting in the framework is a field on a frozen dataclass defined in <code>configs/configurations.py</code>. A run is fully described by the one <code>*TrainConfig</code> object it is handed.</p>
+<p>Those objects are assembled per system in <code>systems/&lt;name&gt;/&lt;name&gt;_configurations.py</code>, where:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SYSTEM</code></td>
+<td><code>SystemConfig</code></td>
+<td>Constants shared by every file in the system</td>
+</tr>
+<tr>
+<td><code>EVAL</code></td>
+<td><code>EvalSpec</code></td>
+<td>Evaluation horizons, extrapolation radii and the horizon threshold</td>
+</tr>
+<tr>
+<td><code>CONFIGS</code></td>
+<td><code>dict[str, *TrainConfig]</code></td>
+<td>One entry per runnable method</td>
+</tr>
+</tbody>
+</table>
+<p>To change a setting, edit that file. To add a method, add an entry to <code>CONFIGS</code>. To add a system, copy the folder.</p>
+<h2 id="global">Global</h2>
+<h3 id="systemconfig"><code>SystemConfig</code></h3>
+<p>The physical constants of a system are defined once inside <code>SYSTEM</code> and referenced everywhere else.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>q0</code></td>
+<td>float or array</td>
+<td>required</td>
+<td>Initial position, used for trajectory data, evaluation and visualization</td>
+</tr>
+<tr>
+<td><code>p0</code></td>
+<td>float or array</td>
+<td>required</td>
+<td>Initial momentum, used for trajectory data, evaluation and visualization</td>
+</tr>
+<tr>
+<td><code>period</code></td>
+<td>float</td>
+<td>required</td>
+<td>One characteristic period. Every horizon in the framework is a multiple of this, so <code>max_horizon = 2.0</code> means two periods</td>
+</tr>
+<tr>
+<td><code>seed</code></td>
+<td>int</td>
+<td>required</td>
+<td>Master seed for data generation, weight initialization and the train/validation split</td>
+</tr>
+<tr>
+<td><code>system_params</code></td>
+<td>dict</td>
+<td>required</td>
+<td>The <em>true</em> physical constants data is generated from, for example <code>{"omega": 2.1}</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="data-generation">Data generation</h2>
+<h3 id="datagenerationconfig"><code>DataGenerationConfig</code></h3>
+<p>Controls what the network is trained on, where <code>type</code> selects the data type used for generation. </p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>make_data</code></td>
+<td>callable</td>
+<td>required</td>
+<td>Bound factory from the system's <code>data.py</code>, called as <code>config.data.make_data(config)</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>str</td>
+<td><code>"field"</code></td>
+<td><code>"field"</code> for state-to-derivative pairs, <code>"trajectory"</code> for time-to-state pairs. Also sets <code>NeuralNetwork.type</code>, which decides whether rollout integrates a vector field or evaluates the network directly</td>
+</tr>
+<tr>
+<td><code>coords</code></td>
+<td>str</td>
+<td><code>"canonical"</code></td>
+<td><code>"canonical"</code> for <code>(q, p)</code>, <code>"velocity"</code> for <code>(q, q̇)</code>. Sets <code>NeuralNetwork.coords</code> and is passed to <code>true_trajectory</code>/<code>hamiltonian</code>. LNN needs <code>"velocity"</code>; it only matters once a system's canonical <code>p</code> and generalized <code>q̇</code> differ numerically</td>
+</tr>
+<tr>
+<td><code>q_range</code></td>
+<td>tuple</td>
+<td><code>(-2.0, 2.0)</code></td>
+<td>Field only. Box in position the sampled states are drawn from</td>
+</tr>
+<tr>
+<td><code>p_range</code></td>
+<td>tuple</td>
+<td><code>(-2.0, 2.0)</code></td>
+<td>Field only. Box in momentum</td>
+</tr>
+<tr>
+<td><code>field_N</code></td>
+<td>int</td>
+<td><code>8192</code></td>
+<td>Field only. Number of sampled states</td>
+</tr>
+<tr>
+<td><code>field_sigma_y</code></td>
+<td>float</td>
+<td><code>0.0</code></td>
+<td>Field only. Gaussian noise on the targets <code>(q̇, ṗ)</code>. <strong>Relative</strong>: the std used is <code>sigma × std(y)</code>, per component, so the same value means the same signal-to-noise ratio on every system. This is what <code>benchmark.py --sigmas</code> sweeps</td>
+</tr>
+<tr>
+<td><code>field_sigma_x</code></td>
+<td>float</td>
+<td><code>0.0</code></td>
+<td>Field only. The same, on the inputs <code>(q, p)</code>. This is errors-in-variables and it <em>biases</em> the learned vector field toward zero, which shows up as a frequency error. Off by default, sweep it as a separate experiment</td>
+</tr>
+<tr>
+<td><code>trajectory_N</code></td>
+<td>int</td>
+<td><code>8192</code></td>
+<td>Trajectory only. Number of time samples</td>
+</tr>
+<tr>
+<td><code>trajectory_sigma_y</code></td>
+<td>float</td>
+<td><code>0.0</code></td>
+<td>Trajectory only. Relative Gaussian noise on the target <code>q</code>, same convention as <code>field_sigma_y</code>. This is what <code>benchmark.py --sigmas</code> sweeps</td>
+</tr>
+<tr>
+<td><code>trajectory_sigma_x</code></td>
+<td>float</td>
+<td><code>0.0</code></td>
+<td>Trajectory only. The same, on the input <code>t</code>. Perturbing the timestamp <em>biases</em> the learned amplitude by <span class="arithmatex">\(\exp(-\omega^2\sigma^2/2)\)</span> while leaving <span class="arithmatex">\(\omega\)</span> unbiased, so <code>q0</code>/<code>p0</code> come out systematically small. Off by default</td>
+</tr>
+<tr>
+<td><code>initial_conditions</code></td>
+<td>tuple</td>
+<td><code>None</code></td>
+<td>Trajectory only. The <code>(q0, p0)</code> the solution starts from. Should reference <code>SYSTEM.q0</code>/<code>SYSTEM.p0</code></td>
+</tr>
+<tr>
+<td><code>period</code></td>
+<td>float</td>
+<td><code>None</code></td>
+<td>Trajectory only. Length of the sampled window. Should reference <code>SYSTEM.period</code></td>
+</tr>
+</tbody>
+</table>
+<p>Field and trajectory data are not interchangeable, and the difference drives most of the comparison on this site. See <a href="../#field-data-and-trajectory-data">Field data and trajectory data</a>.</p>
+<hr />
+<h2 id="network">Network</h2>
+<h3 id="networkconfig"><code>NetworkConfig</code></h3>
+<p>Architecture and optimizer schedule.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>architecture</code></td>
+<td>tuple of dicts</td>
+<td>required</td>
+<td>Layer stack, for example <code>({"type": "fc", "units": 64, "activation": "tanh"}, ...)</code>. The output of the architecture must be carefully constructed according to the type of system and its degrees of freedom.</td>
+</tr>
+<tr>
+<td><code>epochs</code></td>
+<td>int</td>
+<td>required</td>
+<td>Training epochs</td>
+</tr>
+<tr>
+<td><code>learning_rate</code></td>
+<td>float</td>
+<td>required</td>
+<td>Peak learning rate, reached at the end of warmup</td>
+</tr>
+<tr>
+<td><code>schedule</code></td>
+<td>str</td>
+<td><code>"cosine"</code></td>
+<td><code>"cosine"</code> for warmup then cosine decay to <code>end_value</code>. <code>"plateau"</code> for warmup then a constant rate with <code>optax.contrib.reduce_on_plateau</code> layered on</td>
+</tr>
+<tr>
+<td><code>end_value</code></td>
+<td>float</td>
+<td><code>1e-5</code></td>
+<td>Final learning rate of the cosine decay. Unused when <code>schedule="plateau"</code></td>
+</tr>
+<tr>
+<td><code>decay_steps</code></td>
+<td>int</td>
+<td><code>None</code></td>
+<td>Cosine decay length in optimizer steps. <code>None</code> means <code>epochs × steps_per_epoch</code></td>
+</tr>
+<tr>
+<td><code>warmup_steps</code></td>
+<td>int</td>
+<td><code>None</code></td>
+<td>Linear warmup length in steps. <code>None</code> means <code>max(200, decay_steps // 40)</code></td>
+</tr>
+<tr>
+<td><code>plateau_factor</code></td>
+<td>float</td>
+<td><code>0.5</code></td>
+<td>Plateau only. Multiplier applied to the rate when progress stalls</td>
+</tr>
+<tr>
+<td><code>plateau_patience</code></td>
+<td>int</td>
+<td><code>50</code></td>
+<td>Plateau only. Epochs without improvement before reducing. <code>accumulation_size</code> is set to <code>steps_per_epoch</code>, so this really does count epochs rather than steps</td>
+</tr>
+<tr>
+<td><code>plateau_cooldown</code></td>
+<td>int</td>
+<td><code>20</code></td>
+<td>Plateau only. Epochs to wait after a reduction before measuring again</td>
+</tr>
+<tr>
+<td><code>plateau_rtol</code></td>
+<td>float</td>
+<td><code>1e-3</code></td>
+<td>Plateau only. Relative improvement below this counts as no progress</td>
+</tr>
+<tr>
+<td><code>plateau_min_scale</code></td>
+<td>float</td>
+<td><code>1e-3</code></td>
+<td>Plateau only. Floor on the cumulative reduction, so the rate cannot collapse to zero</td>
+</tr>
+<tr>
+<td><code>save_filepath</code></td>
+<td>str</td>
+<td><code>None</code></td>
+<td>Where to write weights after training. <code>None</code> disables saving</td>
+</tr>
+<tr>
+<td><code>load_filepath</code></td>
+<td>str</td>
+<td><code>None</code></td>
+<td>Weights to restore before training. <code>None</code> starts from a fresh initialization</td>
+</tr>
+</tbody>
+</table>
+<p>Gradient clipping at global norm <code>1.0</code> and AdamW weight decay of <code>1e-5</code> are applied unconditionally and are not configurable.</p>
+<h3 id="trainingconfig"><code>TrainingConfig</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>batch_size</code></td>
+<td>int</td>
+<td>required</td>
+<td>Minibatch size. Must satisfy <code>val_split × N_data ≥ batch_size</code></td>
+</tr>
+<tr>
+<td><code>val_split</code></td>
+<td>float</td>
+<td><code>0.8</code></td>
+<td>Fraction kept for <strong>training</strong>. <code>0.8</code> means 80% train and 20% validation</td>
+</tr>
+<tr>
+<td><code>do_validation</code></td>
+<td>bool</td>
+<td><code>True</code></td>
+<td>Whether to compute the validation pass, which calls <code>val_call</code> and so skips collocation and physics residuals</td>
+</tr>
+<tr>
+<td><code>lambda_reg</code></td>
+<td>float</td>
+<td><code>0.0</code></td>
+<td>Initial weight on the L2 penalty over network weights, always the last loss term</td>
+</tr>
+<tr>
+<td><code>use_auto_lambda</code></td>
+<td>bool</td>
+<td><code>False</code></td>
+<td>Whether the loss weights are learned by Kendall uncertainty weighting or frozen at their initial values</td>
+</tr>
+<tr>
+<td><code>live_metrics</code></td>
+<td>bool</td>
+<td><code>True</code></td>
+<td>Per-epoch progress line during training</td>
+</tr>
+<tr>
+<td><code>static_metrics</code></td>
+<td>bool</td>
+<td><code>True</code></td>
+<td>Summary banner printed at the start and end of the run</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="loss">Loss</h2>
+<p>Each method has a loss config. Every <code>lambda_*</code> field is the <strong>initial</strong> value of that term's weight, converted internally to <span class="arithmatex">\(s_i = -\tfrac{1}{2}\log(2\lambda_i)\)</span>. Whether the weights then move is controlled by <code>use_auto_lambda</code>. See <a href="../#loss-weighting">Loss weighting</a>.</p>
+<p>A <code>lambda_*</code> field left at <code>None</code> means that loss term is not present for this run and no weight is allocated for it.</p>
+<h3 id="mlplossconfig"><code>MLPLossConfig</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lambda_data</code></td>
+<td>float</td>
+<td><code>1.0</code></td>
+<td>Initial weight on the data term</td>
+</tr>
+<tr>
+<td><code>augment_trajectory_derivative</code></td>
+<td>bool</td>
+<td><code>False</code></td>
+<td>Trajectory MLPs only. When <code>True</code>, rollout reconstructs <code>q̇</code> by autodiff on the network's own output instead of reading it from a second output unit. Affects rollout only, not the training data</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hnnlossconfig"><code>HNNLossConfig</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lambda_eom</code></td>
+<td>float</td>
+<td>required</td>
+<td>Initial weight on the equation-of-motion term. Despite the name this is a supervised fit against the same derivative labels an MLP uses; the physics lives in the architecture, not in this term</td>
+</tr>
+<tr>
+<td><code>hamiltonian</code></td>
+<td><code>HamiltonianConfig</code></td>
+<td>required</td>
+<td>The architecture description below</td>
+</tr>
+<tr>
+<td><code>lambda_correction</code></td>
+<td>float</td>
+<td><code>None</code></td>
+<td>Hybrid mode only. Initial weight on a penalty holding the black-box correction small, so the known term is preferred where it fits</td>
+</tr>
+<tr>
+<td><code>physics</code></td>
+<td><code>PhysicsParamsConfig</code></td>
+<td><code>None</code></td>
+<td>Learnable or fixed constants used by <code>known_term</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="hamiltonianconfig"><code>HamiltonianConfig</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_dof</code></td>
+<td>int</td>
+<td>required</td>
+<td>Degrees of freedom. The network input is <code>2 × n_dof</code></td>
+</tr>
+<tr>
+<td><code>dissipation</code></td>
+<td>str</td>
+<td><code>"none"</code></td>
+<td><code>"none"</code> for conservative Hamilton's equations, <code>"rayleigh"</code> for a scalar damping term, <code>"port_hamiltonian"</code> for <code>ẋ = (J − R)∇H</code> with <code>R = LLᵀ</code> read off a second slice of the same network</td>
+</tr>
+<tr>
+<td><code>integrator</code></td>
+<td>str</td>
+<td><code>"rk4"</code></td>
+<td>Rollout integrator. <code>"leapfrog"</code> is symplectic and available only to HNN, since it needs the canonical split that LNN's coordinates do not provide</td>
+</tr>
+<tr>
+<td><code>known_term</code></td>
+<td>callable</td>
+<td><code>None</code></td>
+<td><code>known_term(state, physics_params) -&gt; scalar</code>. When set, <code>H = known_term(...) + network(...)</code>. When <code>None</code>, <code>H</code> is the pure black-box network</td>
+</tr>
+<tr>
+<td><code>dissipation_term</code></td>
+<td>callable</td>
+<td><code>None</code></td>
+<td>Known functional form for the dissipative part, same hybrid pattern as <code>known_term</code></td>
+</tr>
+<tr>
+<td><code>describe</code></td>
+<td>callable</td>
+<td><code>None</code></td>
+<td>Formats learned physics parameters for printing after training</td>
+</tr>
+<tr>
+<td><code>penalize_correction</code></td>
+<td>bool</td>
+<td><code>False</code></td>
+<td>Enables the <code>correction</code> loss term. Ignored unless <code>known_term</code> is set</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lnnlossconfig"><code>LNNLossConfig</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lambda_eom</code></td>
+<td>float</td>
+<td>required</td>
+<td>Initial weight on the Euler-Lagrange term</td>
+</tr>
+<tr>
+<td><code>lagrangian</code></td>
+<td><code>LagrangianConfig</code></td>
+<td>required</td>
+<td>The architecture description below</td>
+</tr>
+<tr>
+<td><code>lambda_correction</code></td>
+<td>float</td>
+<td><code>None</code></td>
+<td>Hybrid mode only, as for HNN</td>
+</tr>
+<tr>
+<td><code>physics</code></td>
+<td><code>PhysicsParamsConfig</code></td>
+<td><code>None</code></td>
+<td>Learnable or fixed constants used by <code>known_term</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="lagrangianconfig"><code>LagrangianConfig</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_dof</code></td>
+<td>int</td>
+<td>required</td>
+<td>Degrees of freedom. The network input is <code>2 × n_dof</code>, taken as <code>(q, q̇)</code></td>
+</tr>
+<tr>
+<td><code>dissipation</code></td>
+<td>str</td>
+<td><code>"none"</code></td>
+<td><code>"none"</code>, <code>"rayleigh"</code>, or <code>"learned_dissipation"</code> for <code>D(q, q̇) = ½ q̇ᵀR(q)q̇</code> with <code>R</code> obtained by evaluating the same network with the <code>q̇</code> slot zeroed</td>
+</tr>
+<tr>
+<td><code>known_term</code></td>
+<td>callable</td>
+<td><code>None</code></td>
+<td>Same hybrid pattern as HNN, applied to <code>L</code></td>
+</tr>
+<tr>
+<td><code>dissipation_term</code></td>
+<td>callable</td>
+<td><code>None</code></td>
+<td>Known functional form for the dissipative part</td>
+</tr>
+<tr>
+<td><code>describe</code></td>
+<td>callable</td>
+<td><code>None</code></td>
+<td>Formats learned physics parameters for printing</td>
+</tr>
+<tr>
+<td><code>penalize_correction</code></td>
+<td>bool</td>
+<td><code>False</code></td>
+<td>Enables the <code>correction</code> loss term. Ignored unless <code>known_term</code> is set</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pinnlossconfig"><code>PINNLossConfig</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>collocation</code></td>
+<td><code>CollocationConfig</code></td>
+<td>required</td>
+<td>Where the residual is enforced</td>
+</tr>
+<tr>
+<td><code>physics</code></td>
+<td><code>PhysicsParamsConfig</code></td>
+<td>required</td>
+<td>Constants appearing in the residual</td>
+</tr>
+<tr>
+<td><code>residual_fn</code></td>
+<td>callable</td>
+<td>required</td>
+<td>The system's own <code>PhysicsLoss</code> subclass, instantiated as <code>residual_fn(loss_config)</code></td>
+</tr>
+<tr>
+<td><code>lambda_data</code></td>
+<td>float</td>
+<td><code>None</code></td>
+<td>Initial weight on the fit to observations</td>
+</tr>
+<tr>
+<td><code>lambda_physics</code></td>
+<td>float</td>
+<td><code>None</code></td>
+<td>Initial weight on the residual of the governing equation</td>
+</tr>
+<tr>
+<td><code>lambda_initial</code></td>
+<td>float</td>
+<td><code>None</code></td>
+<td>Initial weight on the initial-condition term</td>
+</tr>
+<tr>
+<td><code>lambda_boundary</code></td>
+<td>float</td>
+<td><code>None</code></td>
+<td>Initial weight on the spatial boundary term. Unused by the ODE systems; reserved for PDEs</td>
+</tr>
+<tr>
+<td><code>causal_epsilon</code></td>
+<td>float</td>
+<td><code>0.0</code></td>
+<td>Strength of causal weighting, which down-weights a collocation bin by how much residual is still unresolved before it. <code>0.0</code> disables it. Held constant during training: the curriculum anneals itself as the residuals fall, so no schedule is needed</td>
+</tr>
+<tr>
+<td><code>bounds</code></td>
+<td>dict</td>
+<td><code>{}</code></td>
+<td>Per-parameter <code>(min, max)</code> for learnable physics constants, applied through a sigmoid so a parameter cannot leave its range</td>
+</tr>
+</tbody>
+</table>
+<h3 id="collocationconfig"><code>CollocationConfig</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_points</code></td>
+<td>int</td>
+<td>required</td>
+<td>Number of collocation points, drawn once at construction</td>
+</tr>
+<tr>
+<td><code>x_min</code></td>
+<td>float</td>
+<td>required</td>
+<td>Start of the domain the residual is enforced on</td>
+</tr>
+<tr>
+<td><code>x_max</code></td>
+<td>float</td>
+<td>required</td>
+<td>End of that domain. Extending it past the data window is what lets a PINN extrapolate, and it also sets the normalization constant the network's input is divided by</td>
+</tr>
+<tr>
+<td><code>bins</code></td>
+<td>int</td>
+<td><code>10</code></td>
+<td>Number of equal-count time bins the residual is averaged into before causal weighting. Must divide <code>n_points</code>. Decouples <code>causal_epsilon</code> from <code>n_points</code>, so a tuned <span class="arithmatex">\(\varepsilon\)</span> transfers between systems with different collocation counts</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="physics-parameters">Physics parameters</h2>
+<p>Shared by PINN, HNN and LNN. Every declared entry lands in <code>params["physics"][name]</code> whether or not it is learnable; a fixed entry is simply one the optimizer is never allowed to move, via <code>optax.set_to_zero()</code>, which is equivalent to hardcoding the constant.</p>
+<h3 id="learnableparam"><code>LearnableParam</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>value</code></td>
+<td>float</td>
+<td>required</td>
+<td>Initial value. When <code>bounds</code> apply, this is the <em>unconstrained</em> pre-sigmoid value, so build it with <code>inverse_bounded_param(target, lo, hi)</code> rather than writing the physical number directly</td>
+</tr>
+<tr>
+<td><code>learnable</code></td>
+<td>bool</td>
+<td><code>False</code></td>
+<td>Whether the optimizer may move it</td>
+</tr>
+</tbody>
+</table>
+<h3 id="physicsparamsconfig"><code>PhysicsParamsConfig</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>params</code></td>
+<td>dict</td>
+<td>required</td>
+<td><code>{name: LearnableParam(...)}</code>. Names must match what <code>known_term</code> or the residual reads</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="evaluation">Evaluation</h2>
+<h3 id="evalspec"><code>EvalSpec</code></h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>horizons</code></td>
+<td>tuple</td>
+<td><code>(2, 5, 10, 20, 50)</code></td>
+<td>Rollout lengths in periods. <code>horizons[0]</code> is the headline horizon used by <code>train.py</code> and by the results tables; <code>max(horizons)</code> is the ceiling <code>max_horizon</code> is censored at</td>
+</tr>
+<tr>
+<td><code>horizon_tolerance</code></td>
+<td>float</td>
+<td><code>0.01</code></td>
+<td>How far a rollout may degrade before it stops counting as reliable, as a fraction of the zero-predictor MSE. The threshold is <code>baseline + tolerance × zero_mse</code>, where <code>baseline</code> is the model's own mean error over the first period, so the column is comparable across systems and stays readable as <span class="arithmatex">\(\sigma\)</span> rises</td>
+</tr>
+<tr>
+<td><code>horizon_window</code></td>
+<td>float</td>
+<td><code>0.25</code></td>
+<td>Width, in periods, of the rolling window the error is averaged over before the threshold is applied. Smoothing makes the crossing robust to single-sample spikes; the cost is that nothing below <code>horizon_window</code> periods is reportable</td>
+</tr>
+<tr>
+<td><code>radii</code></td>
+<td>tuple</td>
+<td><code>(0.5, 1.0, 1.5, 2.0, 3.0)</code></td>
+<td>Initial-condition scalings used for state-space extrapolation. Each rollout starts from <code>(r·q0, r·p0)</code>, and <code>max_radius</code> is the largest <code>r</code> still tracking. Field methods only, since a trajectory method has its initial condition baked into its weights</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="visualization">Visualization</h2>
+<h3 id="visualizationconfig"><code>VisualizationConfig</code></h3>
+<p>The rollout animations produced after training finishes.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td>bool</td>
+<td><code>False</code></td>
+<td>Whether to build the animation at all</td>
+</tr>
+<tr>
+<td><code>horizon</code></td>
+<td>float</td>
+<td><code>3.0</code></td>
+<td>How many periods the rollout covers</td>
+</tr>
+<tr>
+<td><code>n_frames</code></td>
+<td>int</td>
+<td><code>400</code></td>
+<td>Frames rendered. The dominant cost, in both runtime and file size</td>
+</tr>
+<tr>
+<td><code>interval</code></td>
+<td>int</td>
+<td><code>25</code></td>
+<td>Milliseconds per frame on screen. Also sets the saved frame rate, as <code>1000 / interval</code></td>
+</tr>
+<tr>
+<td><code>save_path</code></td>
+<td>bool</td>
+<td><code>False</code></td>
+<td>Whether to write the file. The path itself is derived from the system and method, landing in <code>systems/&lt;system&gt;/&lt;family&gt;/plots/</code></td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>str</td>
+<td><code>"mp4"</code></td>
+<td><code>"mp4"</code> or <code>"gif"</code>. mp4 is roughly ten times smaller for the same content and gives the viewer playback controls</td>
+</tr>
+<tr>
+<td><code>dpi</code></td>
+<td>int</td>
+<td><code>100</code></td>
+<td>Resolution of the saved file</td>
+</tr>
+<tr>
+<td><code>make_vis</code></td>
+<td>callable</td>
+<td><code>None</code></td>
+<td>Bound factory from the system's visualizations module</td>
+</tr>
+</tbody>
+</table>
+<h3 id="livelearningconfig"><code>LiveLearningConfig</code></h3>
+<p>The plot that drives training itself, one <code>train_epoch()</code> per animation frame, so the fit can be watched as it forms.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td>bool</td>
+<td><code>False</code></td>
+<td>When <code>True</code>, <code>train.py</code> calls <code>live_learning_plot(model)</code> <strong>instead of</strong> <code>model.train()</code></td>
+</tr>
+<tr>
+<td><code>n_points</code></td>
+<td>int</td>
+<td><code>200</code></td>
+<td>Resolution of the predicted curve</td>
+</tr>
+<tr>
+<td><code>plot_every</code></td>
+<td>int</td>
+<td><code>1</code></td>
+<td>Epochs between redraws. Redrawing every epoch throttles training to matplotlib's render speed, roughly 5 it/s against 300 it/s undecorated, so raise this for real runs</td>
+</tr>
+<tr>
+<td><code>horizon</code></td>
+<td>float</td>
+<td><code>3.0</code></td>
+<td>How far past the training domain the plot extends, in periods</td>
+</tr>
+<tr>
+<td><code>log_scale</code></td>
+<td>bool</td>
+<td><code>True</code></td>
+<td>Log axis on the loss panels</td>
+</tr>
+<tr>
+<td><code>save_path</code></td>
+<td>bool</td>
+<td><code>False</code></td>
+<td>Whether to write the result, again to a path derived from system and method</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>str</td>
+<td><code>"mp4"</code></td>
+<td><code>"png"</code> saves a single snapshot of the final frame. <code>"gif"</code> or <code>"mp4"</code> captures every redrawn frame and writes an animation of the whole training run</td>
+</tr>
+<tr>
+<td><code>make_live_plot</code></td>
+<td>callable</td>
+<td><code>None</code></td>
+<td>Bound factory from the system's visualizations module</td>
+</tr>
+</tbody>
+</table>
+<p>Closing the live window stops training early and still saves.</p>
+<hr />
+<h2 id="assembling-a-run">Assembling a run</h2>
+<p>The four <code>*TrainConfig</code> classes, <code>MLPTrainConfig</code>, <code>HNNTrainConfig</code>, <code>LNNTrainConfig</code> and <code>PINNTrainConfig</code>, differ only in which loss config they carry. The method is identified by the config type, so <code>HNNTrainConfig</code> is what selects the HNN code path.</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>DataGenerationConfig</code></td>
+<td>required</td>
+<td></td>
+</tr>
+<tr>
+<td><code>evaluation</code></td>
+<td><code>EvalSpec</code></td>
+<td>required</td>
+<td></td>
+</tr>
+<tr>
+<td><code>network</code></td>
+<td><code>NetworkConfig</code></td>
+<td>required</td>
+<td></td>
+</tr>
+<tr>
+<td><code>training</code></td>
+<td><code>TrainingConfig</code></td>
+<td>required</td>
+<td></td>
+</tr>
+<tr>
+<td><code>loss</code></td>
+<td>one of the loss configs</td>
+<td>required</td>
+<td>Determines the method</td>
+</tr>
+<tr>
+<td><code>system</code></td>
+<td><code>SystemConfig</code></td>
+<td>required</td>
+<td></td>
+</tr>
+<tr>
+<td><code>visualizations</code></td>
+<td><code>VisualizationConfig</code></td>
+<td><code>None</code></td>
+<td><code>None</code> disables the post-hoc animation</td>
+</tr>
+<tr>
+<td><code>live_learning</code></td>
+<td><code>LiveLearningConfig</code></td>
+<td><code>None</code></td>
+<td><code>None</code> falls back to a plain <code>model.train()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Presets are shared by reference across methods, so one edit propagates to every entry using it:</p>
+<div class="highlight"><pre><span></span><code><span class="n">CONFIGS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;hnn&quot;</span><span class="p">:</span>  <span class="n">HNNTrainConfig</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">DATA_GEN_FIELD</span><span class="p">,</span> <span class="n">evaluation</span><span class="o">=</span><span class="n">EVAL</span><span class="p">,</span> <span class="n">network</span><span class="o">=</span><span class="n">HNN_NETWORK</span><span class="p">,</span>
+                           <span class="n">training</span><span class="o">=</span><span class="n">TRAINING</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">HNN_LOSS</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">SYSTEM</span><span class="p">,</span>
+                           <span class="n">visualizations</span><span class="o">=</span><span class="n">VISUALIZATION</span><span class="p">,</span> <span class="n">live_learning</span><span class="o">=</span><span class="n">LIVE_LEARNING</span><span class="p">),</span>
+    <span class="s2">&quot;pinn&quot;</span><span class="p">:</span> <span class="n">PINNTrainConfig</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">DATA_GEN_TRAJECTORY</span><span class="p">,</span> <span class="n">evaluation</span><span class="o">=</span><span class="n">EVAL</span><span class="p">,</span> <span class="n">network</span><span class="o">=</span><span class="n">PINN_NETWORK</span><span class="p">,</span>
+                            <span class="n">training</span><span class="o">=</span><span class="n">TRAINING</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">PINN_LOSS</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="n">SYSTEM</span><span class="p">,</span>
+                            <span class="n">visualizations</span><span class="o">=</span><span class="n">VISUALIZATION</span><span class="p">,</span> <span class="n">live_learning</span><span class="o">=</span><span class="n">LIVE_LEARNING</span><span class="p">),</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Settings found by <code>tune.py</code> are not written back into this file. They are stored as JSON in <code>systems/&lt;system&gt;/&lt;family&gt;/best_configs/&lt;method&gt;.json</code> and reapplied on top of the config above when you pass <code>--tuned</code>, or automatically by <code>benchmark.py</code>. The per-method settings tables in the system pages report whichever of the two a run actually used.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.top", "navigation.indexes", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
